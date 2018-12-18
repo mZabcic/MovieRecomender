@@ -4,30 +4,18 @@ const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 // Setup schema
 var userSchema = mongoose.Schema({
-    facebookToken: {
+      facebookToken: {
         type: String,
         required: false
       },
-      id: {
+      facebook_id: {
         type: Number, unique: true, sparse: true
       },
       social : {
         type: Boolean, default: false
       },
-      photoUrl: {
-        type: String,
-        required: false
-      },
       first_name: {
         type: String,
-        required: false
-      },
-      name: {
-        type: String,
-        required: false
-      }
-      , hometown: {
-        type: {},
         required: false
       }
       , gender: {
@@ -37,12 +25,6 @@ var userSchema = mongoose.Schema({
       , last_name: {
         type: String,
         required: false
-      }
-      , age_range: {
-        min: {
-          type: Number,
-          required: false
-        }
       }
       , birthday: {
         type: String,
@@ -67,6 +49,8 @@ userSchema.methods.toJSON = function() {
     delete obj.password;
     return obj;
 }
+
+
 
 var User = module.exports = mongoose.model('user', userSchema);
 module.exports.get = function (callback, limit) {

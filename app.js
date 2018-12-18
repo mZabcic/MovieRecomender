@@ -41,7 +41,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users',jwt({ secret: config.secret}), usersRouter);
+app.use('/users',jwt({ secret: config.secret, isRevoked : config.isRevoked}), usersRouter);
 
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {

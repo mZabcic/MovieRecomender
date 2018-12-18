@@ -21,8 +21,8 @@ exports.new = function (req, res) {
                 return
             }
             console.log('New user');
-            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email  }, config.secret, config.JWT);
-            res.json(201, {
+            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+            res.status(201).json({
                 token: token,
                 user: docs
             });
@@ -33,7 +33,7 @@ exports.newSocial = function(req, res) {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     var accesToken = req.body.authToken;
     sget.concat({
-        url: 'https://graph.facebook.com/v3.1/me?fields=name,email,first_name,hometown,gender,last_name,age_range,birthday,movies',
+        url: 'https://graph.facebook.com/v3.1/me?fields=name,email,first_name,gender,last_name,birthday,movies',
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + accesToken
@@ -48,6 +48,14 @@ exports.newSocial = function(req, res) {
         data.username = req.body.username;
         data.password = req.body.password;
         data.social = true;
+        data.movies = data.movies.data;
+        data.facebook_id = data.id;
+        if (data.gender == 'male') {
+            data.gender = 'M';
+        } else {
+            data.gender = 'F';
+        }
+        delete data.id;
         var user = new User(data);
         user.save(function (err, docs) {
             if (err) {
@@ -55,7 +63,7 @@ exports.newSocial = function(req, res) {
                 return
             }
             console.log('New user');
-            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email  }, config.secret, config.JWT);
+            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
             res.json(201, {
                 token: token,
                 user: docs
@@ -75,7 +83,7 @@ exports.login = function(req, res) {
         if (!user) return res.status(404).json({error : 'No user found.'});
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).json({ error : "Password is wrong"});
-        var token = jwt.sign({ _id: user._id, name : user.name, email : user.email  }, config.secret, config.JWT);
+        var token = jwt.sign({ _id: user._id, name : user.name, email : user.email, sub : docs._id, iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
         res.status(200).send({ user: user, token: token });
 });
 
