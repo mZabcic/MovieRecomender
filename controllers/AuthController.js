@@ -7,6 +7,15 @@ const { NotFound } = require('http-errors')
 
 const { validationResult } = require('express-validator/check');
 
+/**
+ * 
+ * @route GET /api
+ * @group foo - Operations about user
+ * @param {string} email.query.required - username or email - eg: user@domain
+ * @param {string} password.query.required - user's password.
+ * @returns {object} 200 - An array of user info
+ * @returns {Error}  default - Unexpected error
+ */
 
 exports.new = function (req, res) {
     const errors = validationResult(req);
@@ -31,7 +40,7 @@ exports.new = function (req, res) {
 
 exports.newSocial = function(req, res) {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
-    var accesToken = req.body.authToken;
+    var accesToken = req.body.access_token;
     sget.concat({
         url: 'https://graph.facebook.com/v3.1/me?fields=name,email,first_name,gender,last_name,birthday,movies',
         method: 'GET',
@@ -44,7 +53,7 @@ exports.newSocial = function(req, res) {
             res.status(400).json(data);
             return
         }
-        data.facebookToken = accesToken;
+        data.facebook_token = accesToken;
         data.username = req.body.username;
         data.password = req.body.password;
         data.social = true;

@@ -7,6 +7,9 @@ var usersRouter = require('./routes/users');
 var config = require('./config');
 var jwt = require('express-jwt');
 
+
+
+
 // Import Body parser
 let bodyParser = require('body-parser');
 // Import Mongoose
@@ -15,6 +18,40 @@ const expressValidator = require('express-validator')
 
 
 var app = express();
+
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+
+
+
+const expressSwagger = require('express-swagger-generator')(app);
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'This is a sample server',
+            title: 'Swagger',
+            version: '1.0.0',
+        },
+        host: 'localhost:3000',
+        basePath: '/v1',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: "",
+            }
+        }
+    },
+    basedir: '/home/mislavz/Code/FAKS/DM-PROJEKT', //app absolute path
+    files: ['./routes/*.js'] //Path to the API handle folder
+};
+expressSwagger(options)
 
 
 app.use(function (req, res, next) {
@@ -40,8 +77,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users',jwt({ secret: config.secret, isRevoked : config.isRevoked}), usersRouter);
+app.use('/'+ config.version + '/', indexRouter);
+app.use('/'+ config.version + '/users',jwt({ secret: config.secret, isRevoked : config.isRevoked}), usersRouter);
 
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {

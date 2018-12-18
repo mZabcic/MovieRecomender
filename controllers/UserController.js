@@ -92,7 +92,7 @@ exports.update = (req, res) => {
 
   delete req.body.social;
   delete req.body.facbook_id;
-  delete req.body.facebookToken;
+  delete req.body.facebook_token;
   if (req.body.gender == '') {
     delete req.body.gender;
   }

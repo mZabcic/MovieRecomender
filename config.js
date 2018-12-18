@@ -9,5 +9,6 @@ module.exports = {
         jwtid: 'sub',
 
     },
-    'isRevoked' : blacklist.isRevoked
+    'isRevoked' : blacklist.isRevoked,
+    'version' : 'v1'
 };

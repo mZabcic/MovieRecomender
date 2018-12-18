@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
-// Setup schema
+/**
+ * @typedef User
+ * @property {integer} facebook_id
+ * @property {string} name.required - Some description for product
+ * @property {Array.<Point>} Point
+ */
 var userSchema = mongoose.Schema({
-      facebookToken: {
+      facebook_token: {
         type: String,
         required: false
       },
