@@ -129,8 +129,9 @@ router.route('')
  * This route will return array of all users in system
  * @route PUT /users/{user_id}
  * @param {string} user_id.param.required - User _id
+ * @param {UserUpdate.model} data.body - Data for user update
  * @group Users
- * @returns {UserUpdate.model} 200 - Changed user
+ * @returns {User.model} 200 - Changed user
  * @returns {Error.model}  500 - Server error
  * @returns {Error.model}  400 - Wrong form data
  * @returns {Error.model}  401 - Invalid token
