@@ -128,7 +128,7 @@ router.route('')
 /**
  * This route will return array of all users in system
  * @route PUT /users/{user_id}
- * @param {string} user_id.param.required - User _id
+ * @param {string} user_id.parameter.required - User _id
  * @group Users
  * @returns {UserUpdate.model} 200 - Changed user
  * @returns {Error.model}  500 - Server error
