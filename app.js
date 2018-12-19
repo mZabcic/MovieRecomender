@@ -32,7 +32,7 @@ let options = {
             title: 'Swagger',
             version: '1.0.0',
         },
-        host: '165.227.128.66',
+        host: 'localhost:3000',
         basePath: '/v1',
         produces: [
             "application/json"
@@ -47,7 +47,7 @@ let options = {
             }
         }
     },
-    basedir: '/var/www/MovieRecomender', //app absolute path
+    basedir: '/home/mislavz/Code/FAKS/DM-PROJEKT', //app absolute path
     files: ['./routes/*.js'] //Path to the API handle folder
 };
 expressSwagger(options)
