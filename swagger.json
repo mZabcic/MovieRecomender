@@ -8,8 +8,8 @@
     "schemes": [
         "http"
     ],
-    "host": "localhost:3000",
-    "basePath": "/",
+    "host": "http://165.227.128.66",
+    "basePath": "/v1/",
     "paths": {
     }
 }
