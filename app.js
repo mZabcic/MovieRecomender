@@ -28,11 +28,11 @@ const expressSwagger = require('express-swagger-generator')(app);
 let options = {
     swaggerDefinition: {
         info: {
-            description: 'This is a sample server',
+            description: 'Movie recomender api',
             title: 'Swagger',
             version: '1.0.0',
         },
-        host: 'localhost:3000',
+        host: '165.227.128.66',
         basePath: '/v1',
         produces: [
             "application/json"
@@ -47,7 +47,7 @@ let options = {
             }
         }
     },
-    basedir: '/home/mislavz/Code/FAKS/DM-PROJEKT', //app absolute path
+    basedir: '/var/www/MovieRecomender', //app absolute path
     files: ['./routes/*.js'] //Path to the API handle folder
 };
 expressSwagger(options)
