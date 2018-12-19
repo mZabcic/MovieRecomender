@@ -73,9 +73,9 @@ const date = function isValidDate(value) {
  * @returns {Error.model}  500 - Server error
  * @returns {Error.model}  401 - Invalid token
  * @returns {Error.model}  404 - No data found
- * @headers {string} 200.authorization - Bearer <jwt token>
  * @produces application/json
  * @consumes application/json
+ * @security JWT
  */
 router.route('/me')
   .get( UserController.me);
@@ -89,9 +89,9 @@ router.route('/me')
  * @returns {Error.model}  500 - Server error
  * @returns {Error.model}  401 - Invalid token
  * @returns {Error.model}  404 - No data found
- * @headers {string} 200.authorization - Bearer <jwt token>
  * @produces application/json
  * @consumes application/json
+ * @security JWT
  */
 router.route('')
     .get( UserController.get);
@@ -107,9 +107,9 @@ router.route('')
  * @returns {Error.model}  500 - Server error
  * @returns {Error.model}  401 - Invalid token
  * @returns {Error.model}  404 - No data found
- * @headers {string} 200.authorization - Bearer <jwt token>
  * @produces application/json
  * @consumes application/json
+ * @security JWT
  */
 /**
  * This route will return array of all users in system
@@ -121,9 +121,9 @@ router.route('')
  * @returns {Error.model}  401 - Invalid token
  * @returns {Error.model}  403 - You can only delete your account
  * @returns {Error.model}  404 - No data found
- * @headers {string} 200.authorization - Bearer <jwt token>
  * @produces application/json
  * @consumes application/json
+ * @security JWT
  */
 /**
  * This route will return array of all users in system
@@ -136,9 +136,9 @@ router.route('')
  * @returns {Error.model}  401 - Invalid token
  * @returns {Error.model}  403 - You can only delete your account
  * @returns {Error.model}  404 - No data found
- * @headers {string} 200.authorization - Bearer <jwt token>
  * @produces application/json
  * @consumes application/json
+ * @security JWT
  */
 router.route('/:user_id')
     .get(UserController.getById)
