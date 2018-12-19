@@ -30,7 +30,7 @@ exports.new = function (req, res) {
                 return
             }
             console.log('New user');
-            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+            var token = jwt.sign({ _id: docs._id, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
             res.status(201).json({
                 token: token,
                 user: docs
@@ -72,7 +72,7 @@ exports.newSocial = function(req, res) {
                 return
             }
             console.log('New user');
-            var token = jwt.sign({ _id: docs._id, name : docs.name, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+            var token = jwt.sign({ _id: docs._id, email : docs.email, sub : docs._id,  iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
             res.json(201, {
                 token: token,
                 user: docs
@@ -92,8 +92,8 @@ exports.login = function(req, res) {
         if (!user) return res.status(404).json({error : 'No user found.'});
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).json({ error : "Password is wrong"});
-        var token = jwt.sign({ _id: user._id, name : user.name, email : user.email, sub : docs._id/*, iat : Math.floor(Date.now() / 1000)*/ }, config.secret, config.JWT);
-        return res.status(200).send({ user: user, token: token });
+        var token = jwt.sign({ _id: user._id, email : user.email, sub : docs._id, iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+        res.status(200).send({ user: user, token: token });
 });
 
 }
