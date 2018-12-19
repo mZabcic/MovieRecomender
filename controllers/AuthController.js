@@ -92,8 +92,8 @@ exports.login = function(req, res) {
         if (!user) return res.status(404).json({error : 'No user found.'});
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).json({ error : "Password is wrong"});
-        var token = jwt.sign({ _id: user._id, email : user.email, sub : docs._id, iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
-        res.status(200).send({ user: user, token: token });
+        var token = jwt.sign({ _id: user._id, email : user.email, sub : user._id, iat : Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+        res.status(200).json({ user: user, token: token });
 });
 
 }
