@@ -1,3 +1,15 @@
 {
-    "test" : "test"
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Movie recomender API",
+        "description": "Api for movie recomender APP"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "http://165.227.128.66",
+    "basePath": "/v1/",
+    "paths": {
+    }
 }
