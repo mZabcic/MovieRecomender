@@ -38,6 +38,7 @@ const date = function isValidDate(value) {
  * @property {string} gender
  * @property {string} birthday Format MM/DD/YY
  * @property {string} movies
+ * @property {string} music
  * @property {string} facebook_token Access token for facebook
  * @property {string} facebook_id ID of user on facebook
  * @property {boolean} social.required  If user is connected to social network
@@ -53,6 +54,7 @@ const date = function isValidDate(value) {
  * @property {string} gender
  * @property {string} birthday Format MM/DD/YY
  * @property {string} movies
+ * @property {string} music
  * @property {string} password Min 4 char
  */
 
