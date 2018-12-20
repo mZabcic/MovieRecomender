@@ -1,11 +1,48 @@
 const sget = require('simple-get')
 User = require('../models/User');
+var Movie = require('../models/Movie');
+var Music = require('../models/Music');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var config = require('../config');
-const { NotFound } = require('http-errors')
 
 const { validationResult } = require('express-validator/check');
+
+
+var mapMovies = function(movies) {
+    var movies_list = [];
+    movies.forEach(function(element) {
+        element.id = "FB-" + element.id
+        movies_list.push(element.id);
+        Movie.findOne({id :   element.id}, function(err, doc) {
+                if (doc == null) {
+                    var movie = new Movie(element);
+                    movie.save(function (err, docs) {
+                        console.log(err)
+                        console.log('Movie saved');
+                    });
+                }     
+    });
+})
+return movies_list;
+}
+
+var mapMusic = function(music) {
+    var music_list = [];
+    music.forEach(function(element) {
+        element.id = "FB-" + element.id
+        music_list.push(element.id);
+        Music.findOne({id :   element.id}, function(err, doc) {
+                if (doc == null) {
+                    var music = new Music(element);
+                    music.save(function (err, docs) {
+                        console.log('Movie saved');
+                    });
+                }     
+    });
+})
+return music_list;
+}
 
 /**
  * 
@@ -42,7 +79,7 @@ exports.newSocial = function(req, res) {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     var accesToken = req.body.access_token;
     sget.concat({
-        url: 'https://graph.facebook.com/v3.1/me?fields=name,email,first_name,gender,last_name,birthday,movies',
+        url: 'https://graph.facebook.com/v3.1/me?fields=name,email,first_name,gender,last_name,birthday,movies{genre,name,cover,release_date,directed_by,fan_count,description},music{name,cover,genre,bio,band_members}',
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + accesToken
@@ -57,8 +94,9 @@ exports.newSocial = function(req, res) {
         data.username = req.body.username;
         data.password = req.body.password;
         data.social = true;
-        data.movies = data.movies.data;
+        data.movies = mapMovies(data.movies.data);
         data.facebook_id = data.id;
+        data.music = mapMusic(data.music.data);
         if (data.gender == 'male') {
             data.gender = 'M';
         } else {

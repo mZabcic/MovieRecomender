@@ -10,5 +10,7 @@ module.exports = {
 
     },
     'isRevoked' : blacklist.isRevoked,
-    'version' : 'v1'
+    'version' : 'v1',
+    'moviedb_url' : 'https://api.themoviedb.org/3/',
+    'moviedb_apikey' : '?api_key=f60a356bdd7b8698ad391f2b8b2feab9'
 };
