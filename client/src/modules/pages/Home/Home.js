@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { images } from 'modules/assets';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import './Home.css';
 
-class Home extends Component {
+class Home extends PureComponent {
   render() {
     return (
       <div className="Home">
