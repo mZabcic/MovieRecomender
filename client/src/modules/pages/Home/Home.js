@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { images } from 'assets';
+import { images } from 'modules/assets';
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import './Home.css';
 
 class Home extends Component {
@@ -25,4 +27,10 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+  return {};
+}
+
+const mapDispatchToProps = {};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
