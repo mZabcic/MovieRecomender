@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
+var Schema = mongoose.Schema;
 
 
 var movieSchema = mongoose.Schema({
@@ -8,7 +9,7 @@ var movieSchema = mongoose.Schema({
         required: false
       },
       cover: {
-        type: {}
+        type: String
       },
       id : {
         type: String, 
@@ -16,7 +17,7 @@ var movieSchema = mongoose.Schema({
         unique: true
       },
       genre: {
-        type: {}
+        type: [String]
       }
       , release_date: {
         type: String,
@@ -26,13 +27,14 @@ var movieSchema = mongoose.Schema({
         type: String,
         required: false
       }
-      , fan_count: {
-        type: Number,
+      , social_data: {
+        type: {},
         required: false
       }, description: {
         type: String,
         required: false
-      }
+      },
+      users: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 });
 movieSchema.plugin(beautifyUnique);
 

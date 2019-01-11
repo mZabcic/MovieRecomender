@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
-
+var Schema = mongoose.Schema;
 
 var musicSchema = mongoose.Schema({
       name: {
@@ -23,7 +23,8 @@ var musicSchema = mongoose.Schema({
       , band_members: {
         type: String,
         required: false
-      }
+      },
+      users: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 });
 musicSchema.plugin(beautifyUnique);
 

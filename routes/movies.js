@@ -15,7 +15,7 @@ const { check } = require('express-validator/check');
  * @property {Number} release_date Unix timestamp
  * @property {string} id Format is <source>-Id of resource in source
  * @property {string} directed_by
- *  @property {Number} fan_count 
+ *  @property {any} social_data 
  * @property {string} description
  */
 
@@ -55,8 +55,42 @@ router.route('/')
  * @consumes application/json
  * @security JWT
  */
+/**
+ * This route will return updated movie
+ * @route PUT /movies/{movie_id}
+ * @param {string} movie_id.param.required - User _id
+ * @param {Movie.model} data.body - Data for movie update
+ * @group Movies
+ * @returns {any} 200 - Changed user
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  400 - Wrong form data
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  403 - You can only update if you are admin
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+/**
+ * This route will delete movie
+ * @route DELETE /movies/{movie_id}
+ * @param {string} movie_id.param.required - User _id
+ * @group Movies
+ * @returns {any} 204 - User deleted
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  403 - You can only delete movie if you are admin
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
 router.route('/:movie_id')
-  .get( MovieController.getById);
+  .get( MovieController.getById)
+  .put( MovieController.update)
+  .delete( MovieController.delete );
+
+
 
 
 module.exports = router;
