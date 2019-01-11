@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
+var Schema = mongoose.Schema;
 
 
 var userSchema = mongoose.Schema({
@@ -36,11 +37,11 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
       },
-      movies : {
-          type: [String]
-      },
-      music : {
-        type: [String]
+      movies: [{ type: Schema.Types.ObjectId, ref: 'movie' }],
+      music: [{ type: Schema.Types.ObjectId, ref: 'music' }],
+      role : {
+        type: String,
+        required: true
       }
 });
 userSchema.plugin(beautifyUnique);

@@ -52,8 +52,40 @@ router.route('/')
  * @consumes application/json
  * @security JWT
  */
+/**
+ * This route will return updated music
+ * @route PUT /music/{music_id}
+ * @param {string} movie_id.param.required - Music _id
+ * @param {Music.model} data.body - Data for music update
+ * @group Music
+ * @returns {any} 200 - Changed music
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  400 - Wrong form data
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  403 - You can only update if you are admin
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+/**
+ * This route will delete music
+ * @route DELETE /music/{music_id}
+ * @param {string} music_id.param.required - Music _id
+ * @group Music
+ * @returns {any} 204 - Music deleted
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  403 - You can only delete movie if you are admin
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
 router.route('/:music_id')
-  .get( MusicController.getById);
+  .get( MusicController.getById)
+  .put( MusicController.update)
+  .delete( MusicController.delete );
 
 
 module.exports = router;

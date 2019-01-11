@@ -2,22 +2,32 @@ const sget = require('simple-get')
 User = require('../models/User');
 var config = require('../config');
 var blacklist = require('express-jwt-blacklist');
+Movie = require('../models/Movie');
 
 const { validationResult } = require('express-validator/check');
 
 
 const returnUser = function(req, res) {
-    User.findOne({_id: req.params.user_id}, function(err, doc) {
-        if (err) {
-          res.status(500).json(err);
-          return;
-        }
-        if (!doc) {
-          res.status(404).json({error : "No data found"});
-          return;
-        }
-        res.json(doc);
-      }); 
+    User.findOne({_id: req.params.user_id}).populate(['movies', 'music'])
+    .exec(function (err, movie) {
+      if (err) return handleError(err);
+  
+      return res.json(movie);
+  });
+}
+
+const returnMovie = function(movie_id) {
+  Movie.findOne({ _id: movie_id}, function(err, doc) {
+      if (err) {
+        res.status(500).json(err);
+        return;
+      }
+      if (!doc) {
+        res.status(404).json({error : "No data found"});
+        return;
+      }
+      return doc;
+    }); 
 }
 
 exports.get = function (req, res) {
@@ -93,6 +103,7 @@ exports.update = (req, res) => {
   delete req.body.social;
   delete req.body.facbook_id;
   delete req.body.facebook_token;
+  delete req.body.role;
   if (req.body.gender == '') {
     delete req.body.gender;
   }

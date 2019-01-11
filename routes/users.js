@@ -114,7 +114,7 @@ router.route('')
  * @security JWT
  */
 /**
- * This route will return array of all users in system
+ * This route will delete user
  * @route DELETE /users/{user_id}
  * @param {string} user_id.param.required - User _id
  * @group Users
@@ -128,7 +128,7 @@ router.route('')
  * @security JWT
  */
 /**
- * This route will return array of all users in system
+ * This route will return updated user
  * @route PUT /users/{user_id}
  * @param {string} user_id.param.required - User _id
  * @param {UserUpdate.model} data.body - Data for user update
