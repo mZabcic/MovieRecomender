@@ -16,19 +16,7 @@ const returnUser = function(req, res) {
   });
 }
 
-const returnMovie = function(movie_id) {
-  Movie.findOne({ _id: movie_id}, function(err, doc) {
-      if (err) {
-        res.status(500).json(err);
-        return;
-      }
-      if (!doc) {
-        res.status(404).json({error : "No data found"});
-        return;
-      }
-      return doc;
-    }); 
-}
+
 
 exports.get = function (req, res) {
   User.find({}, function(err, doc) {
@@ -47,6 +35,7 @@ exports.get = function (req, res) {
 
 
 exports.getById = function (req, res) {
+  console.log(req.params.user_id)
     returnUser(req, res); 
 };
 
@@ -59,7 +48,7 @@ exports.me = function(req, res) {
 
 exports.delete = (req, res) => {
   var currentUserId = req.user._id;
-  if (currentUserId != req.params.user_id) {
+  if (currentUserId != req.params.user_id && req.user.role != 'Admin') {
     return res.status(403).json({
       error: "You can only delete your account"
     });
@@ -94,7 +83,7 @@ exports.update = (req, res) => {
   }
 
   var currentUserId = req.user._id;
-  if (currentUserId != req.params.user_id) {
+  if (currentUserId != req.params.user_id && req.user.role != 'Admin') {
     return res.status(403).json({
       error: "You can only update your account"
     });

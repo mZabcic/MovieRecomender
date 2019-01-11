@@ -123,6 +123,7 @@ exports.newSocial = function (req, res) {
                         element.id = 'FB-' + element.id;
                         if (element.cover != undefined)
                         element.cover = element.cover.source;
+                        
                     else
                         element.cover = "";
                         if (element.genre != undefined) {
@@ -143,7 +144,6 @@ exports.newSocial = function (req, res) {
                             music_list = music_list.filter(el => el.id !== e.id);
                         });
                         if (music_list.length == 0) {
-                            console.log(existingMusic);
                             docs.music = existingMusic;
 
                             docs.save(function (err, use) {
@@ -151,7 +151,6 @@ exports.newSocial = function (req, res) {
                                     res.status(400).json(err);
                                     return
                                 }
-                                console.log('New user');
                                 var token = jwt.sign({ _id: use._id, email: use.email, role: use.role, sub: use._id, iat: Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
                                 res.status(201).json({
                                     token: token,
@@ -159,7 +158,6 @@ exports.newSocial = function (req, res) {
                                 });
                             })
                         } else {
-                            console.log(existingMusic);
                             Music.collection.insert(music_list, function (err, mus) {
                                 if (err) {
                                     return console.error(err);
@@ -269,7 +267,6 @@ exports.newSocial = function (req, res) {
                                                     res.status(400).json(err);
                                                     return
                                                 }
-                                                console.log('New user');
                                                 var token = jwt.sign({ _id: use._id, email: use.email, role: use.role, sub: use._id, iat: Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
                                                 res.status(201).json({
                                                     token: token,
