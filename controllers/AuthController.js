@@ -3,7 +3,6 @@ User = require('../models/User');
 var Movie = require('../models/Movie');
 var Music = require('../models/Music');
 var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
 var config = require('../config');
 
 const { validationResult } = require('express-validator/check');
@@ -311,7 +310,6 @@ exports.login = function (req, res) {
     }
     User.findOne({ id: req.body.facebook_id }, function (err, user) {
         if (err) return res.status(500).json({ error: 'Error on the server.' });
-        console.log(user);
         if (!user) {
             createUser(req.body.access_token, res);
 
@@ -434,7 +432,7 @@ const createUser = function(accesToken, res) {
                         } else {
                             Music.collection.insert(music_list, function (err, mus) {
                                 if (err) {
-                                    return console.error(err);
+                                    return res.json(err);
                                 } else {
                                     var ids = [];
                                     mus.ops.forEach((e) => {
@@ -465,7 +463,7 @@ const createUser = function(accesToken, res) {
             } else
                 Movie.collection.insert(movies_list, function (err, docs) {
                     if (err) {
-                        return console.error(err);
+                        return res.json(err);
                     } else {
                         var ids = [];
                         docs.ops.forEach((e) => {

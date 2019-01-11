@@ -10,7 +10,7 @@ const { check } = require('express-validator/check');
  * @typedef Movie
  * @property {string} _id
  * @property {string} name
- * @property {string} genre
+ * @property {Array.<string>} genre
  * @property {string} cover 
  * @property {Number} release_date Unix timestamp
  * @property {string} id Format is <source>-Id of resource in source
@@ -24,11 +24,20 @@ const { check } = require('express-validator/check');
  * 
  * @typedef CreateMovie
  * @property {string} name
- * @property {string} genre
+ * @property {string} genre 
  * @property {string} cover 
  * @property {Number} release_date Unix timestamp
  * @property {string} directed_by
  * @property {string} description
+ */
+
+ /**
+ * 
+ * @typedef SearchResult
+ * @property {{Array.<Movie>}} db     Movies from database   
+ * @property {any} tmdb   Movies from the movie database
+ * @property {any} omdb   Movies from OMDB
+
  */
 
 
@@ -36,6 +45,39 @@ const { check } = require('express-validator/check');
 
 // Import contact controller
 var MovieController = require('../controllers/MovieController');
+
+ /**
+ * This route will add movie from tmdb to db
+ * @route GET /movie/tmdb/{movie_id}
+ * @param {string} movie_id.param.required - TMDB movie id
+ * @group Movies
+ * @returns {Movie.model} 200 - Movie object
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/tmdb/:movie_id/')
+.post( MovieController.addTMDBMovie);
+
+/**
+ * This route will return found movies from db, tmdb i omdb 
+ * @route GET /search?term=blabla
+ * @param {string} term.query.required - Search term 
+ * @group Movies
+ * @returns {SearchResult.model} 200 - Movie object
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/search/')
+  .get( MovieController.search);
+
 
 /**
  * This route returns all movies in db
@@ -69,6 +111,8 @@ router.route('/')
     check('description').isLength({ min: 4 }),
   ], MovieController.new);
 
+
+ 
 
 
 /**
@@ -139,7 +183,7 @@ router.route('/:movie_id/users')
 
 
 /**
- * This route will add movie to user movies list
+ * This route will add movie from db to user movies list
  * @route POST /movie/{movie_id}/users/{user_id}
  * @param {string} movie_id.param.required - Movie id
  * @param {string} movie_id.param.required - User id
@@ -169,6 +213,10 @@ router.route('/:movie_id/users')
 router.route('/:movie_id/users/:user_id')
   .post( MovieController.addMovie)
   .delete( MovieController.removeMovie);
+
+
+
+
 
 
 
