@@ -10,7 +10,7 @@ const { validationResult } = require('express-validator/check');
 const returnUser = function(req, res) {
     User.findOne({_id: req.params.user_id}).populate(['movies', 'music'])
     .exec(function (err, movie) {
-      if (err) return handleError(err);
+      if (err) return err;
   
       return res.json(movie);
   });

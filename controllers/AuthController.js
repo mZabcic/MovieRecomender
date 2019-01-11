@@ -125,6 +125,13 @@ exports.newSocial = function (req, res) {
                         element.cover = element.cover.source;
                     else
                         element.cover = "";
+                        if (element.genre != undefined) {
+                            var genres = [];
+                            genres = element.genre.split('/');
+                            element.genre = genres;
+                        } else {
+                            genre = "";
+                        }
                         music_list.push(element);
                         music_ids.push(element.id);
                     });
@@ -213,6 +220,13 @@ exports.newSocial = function (req, res) {
                                 element.cover = element.cover.source;
                             else
                                 element.cover = "";
+                                if (element.genre != undefined) {
+                                    var genres = [];
+                                    genres = element.genre.split('/');
+                                    element.genre = genres;
+                                } else {
+                                    genre = "";
+                                }
                                 music_list.push(element);
                                 music_ids.push(element.id);
                             });
