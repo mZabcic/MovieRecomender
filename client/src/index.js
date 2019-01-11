@@ -7,9 +7,9 @@ import {
   Home,
   Profile,
   About,
-  Genres,
+  Login,
   Contact,
-  Top100
+  TopMovies
 } from 'modules/pages';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -24,8 +24,8 @@ ReactDOM.render(
         <Route path="/profile" component={Profile} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
-        <Route path="/genres" component={Genres} />
-        <Route path="/top-100" component={Top100} />
+        <Route path="/top-movies" component={TopMovies} />
+        <Route path="/login" component={Login} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-class Top100 extends PureComponent {
+class TopMovies extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -19,4 +19,4 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Top100));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopMovies));
