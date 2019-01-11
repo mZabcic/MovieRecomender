@@ -18,6 +18,10 @@ const returnMovie = function(req, res) {
   }); 
 }
 
+const getSocialData = function(name) {
+
+}
+
 exports.get = function (req, res) {
   Movie.find({}, function(err, doc) {
     if (err) {
@@ -210,3 +214,6 @@ exports.removeMovie = function (req, res) {
   
 
 };
+
+
+

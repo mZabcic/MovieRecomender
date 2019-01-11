@@ -4,28 +4,12 @@ const { check } = require('express-validator/check');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * 
- * @typedef UserAuth
- * @property {User.model} user.required  User object
- * @property {string} token.required JWT token
- * 
- */
-
 
  /**
  * 
  * @typedef AuthData
- * @property {string} email.required  Email address, must be unique
- * @property {string} password.required Password, must be at least 4 char long
- * 
- */
-
-  /**
- * 
- * @typedef RegisterDataSocial
- * @property {string} access_token.required  Facebook access token
- * @property {string} password.required Password, must be at least 4 char long
+ * @property {string} access_token.required  Email address, must be unique
+ * @property {string} facebook_id.required Password, must be at least 4 char long
  * 
  */
 
@@ -36,18 +20,7 @@ const { check } = require('express-validator/check');
 // Import contact controller
 var AuthController = require('../controllers/AuthController');
 
-/**
- * This route will create new user and return JWT token for that user
- * @route POST /register
- * @param {AuthData.model} data.body.required - new user
- * @group Auth
- * @returns {UserAuth.model} 200 - User object and JWT token
- * @returns {Error.model}  500 - Server error
- * @returns {Error.model}  400 - Wrong form data
- * @headers {string} 200.Content-type - application/x-www-form-urlencoded
- * @produces application/json
- * @consumes application/json
- */
+/*
 router.route('/register')
     .post([
       check('email').isLength({ min: 3 }),
@@ -56,24 +29,13 @@ router.route('/register')
 
 
 
-/**
- * This route will create new user based on FB account and return JWT token for that user
- * @route POST /social-register
- * @param {RegisterDataSocial.model} data.body.required - Data for new user
- * @group Auth
- * @returns {UserAuth.model} 200 - User object and JWT token
- * @returns {Error.model}  500 - Server error
- * @returns {Error.model}  400 - Wrong form data
- * @headers {string} 200.Content-type - application/x-www-form-urlencoded
- * @produces application/json
- * @consumes application/json
- */
+
 router.route('/social-register')
   .post([
     check('password').isLength({ min: 4 }),
     check('access_token').isLength({ min: 1 }),
 ], AuthController.newSocial);
-
+*/
 
 
 /**
@@ -91,8 +53,8 @@ router.route('/social-register')
  */
 router.route('/login')
   .post([
-    check('password').isLength({ min: 4 }),
-    check('email').isLength({ min: 1 }),
+    check('facebook_id').isLength({ min: 1 }),
+    check('access_token').isLength({ min: 1 }),
 ], AuthController.login);
 
 

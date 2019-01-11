@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var musicRouter = require('./routes/music');
+//var musicRouter = require('./routes/music');
 var movieRouter = require('./routes/movies');
 var config = require('./config');
 var jwt = require('express-jwt');
@@ -80,7 +80,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/'+ config.version + '/', indexRouter);
 app.use('/'+ config.version + '/users',jwt({ secret: config.secret, isRevoked : config.isRevoked}), usersRouter);
-app.use('/'+ config.version + '/music',jwt({ secret: config.secret, isRevoked : config.isRevoked}), musicRouter);
+//app.use('/'+ config.version + '/music',jwt({ secret: config.secret, isRevoked : config.isRevoked}), musicRouter);
 app.use('/'+ config.version + '/movies',jwt({ secret: config.secret, isRevoked : config.isRevoked}), movieRouter);
 
 app.use(function (err, req, res, next) {

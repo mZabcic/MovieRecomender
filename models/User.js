@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
         type: String,
         required: false
       },
-      facebook_id: {
+      id: {
         type: Number, unique: true, sparse: true
       },
       social : {
@@ -32,10 +32,6 @@ var userSchema = mongoose.Schema({
       }, email: {
         type: String,
         unique: 'Two users cannot share the same email ({VALUE})'
-      },
-      password : {
-        type: String,
-        required: true
       },
       movies: [{ type: Schema.Types.ObjectId, ref: 'movie' }],
       music: [{ type: Schema.Types.ObjectId, ref: 'music' }],
