@@ -13,15 +13,14 @@ const { check } = require('express-validator/check');
  */
 
 
- 
-
-  /**
+ /**
  * 
- * @typedef RegisterDataSocial
+ * @typedef AuthData
  * @property {string} access_token.required  Facebook access token
  * @property {string} facebook_id.required Facebook Id
  * 
  */
+
 
 
 
