@@ -4,12 +4,22 @@ const { check } = require('express-validator/check');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
- /**
+/**
  * 
- * @typedef AuthData
- * @property {string} access_token.required  Email address, must be unique
- * @property {string} facebook_id.required Password, must be at least 4 char long
+ * @typedef UserAuth
+ * @property {User.model} user.required  User object
+ * @property {string} token.required JWT token
+ * 
+ */
+
+
+ 
+
+  /**
+ * 
+ * @typedef RegisterDataSocial
+ * @property {string} access_token.required  Facebook access token
+ * @property {string} facebook_id.required Facebook Id
  * 
  */
 
