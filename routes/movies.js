@@ -140,7 +140,7 @@ router.route('/:movie_id/users')
 
 /**
  * This route will add movie to user movies list
- * @route POST /movie/{movie_id}/users
+ * @route POST /movie/{movie_id}/users/{user_id}
  * @param {string} movie_id.param.required - Movie id
  * @param {string} movie_id.param.required - User id
  * @group Movies
@@ -154,7 +154,7 @@ router.route('/:movie_id/users')
  */
 /**
  * This route will remove movie to user movies list
- * @route DELETE /movie/{movie_id}/users
+ * @route DELETE /movie/{movie_id}/users/{user_id}
  * @param {string} movie_id.param.required - Movie id
  * @param {string} movie_id.param.required - User id
  * @group Movies

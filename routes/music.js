@@ -137,7 +137,7 @@ router.route('/:music_id/users')
 
 /**
  * This route will add music to user music list
- * @route POST /music/{music_id}/users
+ * @route POST /music/{music_id}/users/{user_id}
  * @param {string} music_id.param.required - Music id
  * @param {string} music_id.param.required - User id
  * @group Music
@@ -151,7 +151,7 @@ router.route('/:music_id/users')
  */
 /**
  * This route will remove music from user music list
- * @route DELETE /music/{music_id}/users
+ * @route DELETE /music/{music_id}/users/{user_id}
  * @param {string} music_id.param.required - music id
  * @param {string} music_id.param.required - music id
  * @group Music
