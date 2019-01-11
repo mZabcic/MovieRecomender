@@ -8,8 +8,7 @@ var musicSchema = mongoose.Schema({
         required: true
       },
       genre: {
-        type: String,
-        required: true
+        type: [String]
       },
       id : {
         type: String, 
