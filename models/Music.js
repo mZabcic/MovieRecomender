@@ -23,6 +23,10 @@ var musicSchema = mongoose.Schema({
         type: String,
         required: false
       },
+      social_data: {
+        type: {},
+        required: false
+      },
       users: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 });
 musicSchema.plugin(beautifyUnique);
