@@ -71,7 +71,7 @@ exports.newSocial = function (req, res) {
         data.username = data.email;
 
         data.facebook_id = data.id;
-        data.role = "Admin";
+        data.role = "User";
         if (data.gender == 'male') {
             data.gender = 'M';
         } else {
