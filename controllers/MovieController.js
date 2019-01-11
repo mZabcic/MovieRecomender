@@ -1,6 +1,8 @@
 
 Movie = require('../models/Movie');
 User = require('../models/User');
+var config = require('../config');
+const sget = require('simple-get')
 
 const { validationResult } = require('express-validator/check');
 
@@ -105,7 +107,6 @@ exports.delete = (req, res) => {
 
 exports.new = function (req, res) {
   const errors = validationResult(req);
-  console.log(req.user._id);
   if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array() });
   }
@@ -215,5 +216,168 @@ exports.removeMovie = function (req, res) {
 
 };
 
+
+
+exports.search = function (req, res)  {
+  var term = req.query.term;
+  var page = req.query.page;
+  var page_tmdb = req.query.tmdb_page;
+  var page_omdb = req.query.omdb_page;
+  var returnObject = {};
+  page = page == undefined ? 1 : page;
+  page_tmdb = page_tmdb == undefined ? 1 : page_tmdb;
+  page_omdb = page_omdb == undefined ? 1 : page_omdb;
+ if (term == undefined) {
+    res.status(400).json({error : "Term must be provided"});
+  } 
+  if (term.length < 3) {
+    res.status(400).json({error : "Term must be at least 3 char long"});
+  }
+  Movie
+  .find({ "name": { "$regex":  term , "$options": "i" }})
+  .sort({'name': 1})
+  .exec(function(err, docs) {
+      returnObject.db = docs;
+      tmdbSearch(term, returnObject, page_tmdb, res, page_omdb);
+  });
+}
+
+
+
+const tmdbSearch = (term, returnObject, page, res, page_omdb) => {
+  sget.concat({
+    url: config.moviedb_url + 'search/movie' + config.moviedb_apikey + '&query=' + term + '&page' + page,
+    method: 'GET',
+    json: true
+}, function (err, response, data) {
+    returnObject.tmdb = data;
+    omdbSearch(term, returnObject, page_omdb, res);
+});
+}
+
+
+const omdbSearch = (term, returnObject, page, res) => {
+  sget.concat({
+    url: config.omdb_url  + config.omdb_apikey + '&s=' + term + '&page=' + page + '&type=movie',
+    method: 'GET',
+    json: true
+}, function (err, response, data) {
+    returnObject.omdb = data;
+    res.json(returnObject);
+    
+});
+}
+
+
+
+
+exports.addTMDBMovie = (req, res) => {
+  var gId = 'tmdb-' + req.params.movie_id;
+  Movie.findOne({id : gId},function(err,m){
+    if (!err && m){
+        
+      User.findOne({_id : req.user._id}, (err, doc) => {
+        if (doc.movies.indexOf(m._id) < 0) {
+          doc.movies.push(m._id);
+          doc.save();
+        }
+        res.json(m);
+    })
+    } else {
+
+      sget.concat({
+        url: config.moviedb_url + 'movie/' + req.params.movie_id + config.moviedb_apikey,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+      var g = [];
+         data.genres.forEach(e => {
+            g.push(e.name);
+         });
+        var movie = {
+          name : data.title,
+          cover : 'https://image.tmdb.org/t/p/w500' + data.poster_path,
+          id : 'tmdb-' + data.id,
+          genre : g,
+          release_date : data.release_date,
+          description : data.overview,
+          social_data : {
+            "tmdb-vote_average": data.vote_average,
+            "tmdb-vote_count": data.vote_count
+          }
+        };
+        Movie.create(movie, function (err, small) {
+          if (err) return  res.json(err);;
+          User.findOne({_id : req.user._id}, (err, doc) => {
+            if (doc.movies.indexOf(small._id) < 0) {
+              doc.movies.push(small._id);
+              doc.save();
+            }
+            res.json(small);
+        })
+          })
+        
+    
+    });
+
+    } 
+ });
+  
+}
+
+
+exports.addOMDBMovie = (req, res) => {
+  var gId = 'omdb-' + req.params.movie_id;
+  Movie.findOne({id : gId},function(err,m){
+    if (!err && m){
+        
+      User.findOne({_id : req.user._id}, (err, doc) => {
+        if (doc.movies.indexOf(m._id) < 0) {
+          doc.movies.push(m._id);
+          doc.save();
+        }
+        return res.json(m);
+    })
+    } else {
+
+      sget.concat({
+        url: config.moviedb_url + 'movie/' + req.params.movie_id + config.moviedb_apikey,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+      var g = [];
+         data.genres.forEach(e => {
+            g.push(e.name);
+         });
+        var movie = {
+          name : data.title,
+          cover : 'https://image.tmdb.org/t/p/w500' + data.poster_path,
+          id : 'tmdb-' + data.id,
+          genre : g,
+          release_date : data.release_date,
+          description : data.overview,
+          social_data : {
+            "tmdb-vote_average": data.vote_average,
+            "tmdb-vote_count": data.vote_count
+          }
+        };
+        Movie.create(movie, function (err, small) {
+          if (err) return  res.json(err);;
+          User.findOne({_id : req.user._id}, (err, doc) => {
+            if (doc.movies.indexOf(small._id) < 0) {
+              doc.movies.push(small._id);
+              doc.save();
+            }
+            res.json(small);
+        })
+          })
+        
+    
+    });
+
+    } 
+ });
+  
+}
 
 

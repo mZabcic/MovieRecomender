@@ -3,7 +3,6 @@ User = require('../models/User');
 var Movie = require('../models/Movie');
 var Music = require('../models/Music');
 var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
 var config = require('../config');
 
 const { validationResult } = require('express-validator/check');
