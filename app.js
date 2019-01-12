@@ -9,7 +9,7 @@ var movieRouter = require('./routes/movies');
 var config = require('./config');
 var jwt = require('express-jwt');
 var cron = require('node-cron');
-
+var timeout = require('connect-timeout'); //express v4
 
 
 
@@ -27,6 +27,12 @@ var app = express();
 var swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./swagger.json');
 
+    app.use(timeout(12000000));
+    app.use(haltOnTimedout);
+    
+    function haltOnTimedout(req, res, next){
+      if (!req.timedout) next();
+    }
 
 
 const expressSwagger = require('express-swagger-generator')(app);

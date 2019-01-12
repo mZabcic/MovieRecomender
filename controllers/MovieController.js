@@ -538,6 +538,7 @@ const makeMovieLeader = (u, genres) => {
 
 
 const checkIfUserLikedMovie = (u, id) => {
+ 
   var check = u.movies.filter(el => el.id === id);
   return check.length == 0 ? false : true;
 }
