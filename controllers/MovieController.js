@@ -115,6 +115,7 @@ exports.new = function (req, res) {
   }
   delete req.body.social_data; 
   req.body.id = "CUSTOM-" + new Date().valueOf();
+  req.body.source = "CUSTOM"
   var movie = new Movie(req.body);
   movie.save(function (err, docs) {
       if (err) {
@@ -122,15 +123,16 @@ exports.new = function (req, res) {
           return
       }
       console.log('New movie');
-      User.findById(
-        req.user._id,
-        (err, user) => {
-            if (err) return res.status(500).json({error : err});
-            user.movies.push(docs._id);
-            user.save();
-            return res.status(201).send(docs);
-        }
-    )
+      
+
+
+    User.findOne({_id : req.user._id}, (err, doc) => {
+      if (doc.movies.indexOf(small._id) < 0) {
+        doc.movies.push(small._id);
+        doc.save();
+      }
+      return res.status(201).send(docs);
+  })
       
   })
 };
@@ -294,6 +296,9 @@ exports.addTMDBMovie = (req, res) => {
          data.genres.forEach(e => {
             g.push(e.name);
          });
+         var date = new Date(data.release_date);
+         var month = date.getMonth() + 1;
+          data.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
         var movie = {
           name : data.title,
           cover : 'https://image.tmdb.org/t/p/w500' + data.poster_path,
@@ -304,7 +309,8 @@ exports.addTMDBMovie = (req, res) => {
           social_data : {
             "tmdb-vote_average": data.vote_average,
             "tmdb-vote_count": data.vote_count
-          }
+          },
+          source : "TMDB"
         };
         Movie.create(movie, function (err, small) {
           if (err) return  res.json(err);;
@@ -341,25 +347,28 @@ exports.addOMDBMovie = (req, res) => {
     } else {
 
       sget.concat({
-        url: config.moviedb_url + 'movie/' + req.params.movie_id + config.moviedb_apikey,
+        url: config.omdb_url + config.omdb_apikey + '&i=' + req.params.movie_id ,
         method: 'GET',
         json: true
     }, function (err, response, data) {
       var g = [];
-         data.genres.forEach(e => {
-            g.push(e.name);
-         });
+      g = data.Genre.split(',');
+      var date = new Date(data.Released);
+      var month = date.getMonth() + 1;
+      data.Released = month + '/' + date.getDate() + '/' + date.getFullYear();
         var movie = {
-          name : data.title,
-          cover : 'https://image.tmdb.org/t/p/w500' + data.poster_path,
-          id : 'tmdb-' + data.id,
+          name : data.Title,
+          cover : data.Poster,
+          id : gId,
           genre : g,
-          release_date : data.release_date,
-          description : data.overview,
+          release_date : data.Released,
+          description : data.plot,
           social_data : {
-            "tmdb-vote_average": data.vote_average,
-            "tmdb-vote_count": data.vote_count
-          }
+            "omdb-rating": data.imdbRating,
+            "omdb-vote_count": data.imdbVotes
+          },
+          source : "OMDB",
+          directed_by : data.Director
         };
         Movie.create(movie, function (err, small) {
           if (err) return  res.json(err);;
