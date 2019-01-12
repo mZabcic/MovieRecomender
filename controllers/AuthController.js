@@ -357,9 +357,13 @@ const createUser = function(accesToken, res) {
         data.movies.data.forEach(function (element) {
             element.source = "FB";
             element.id = 'FB-' + element.id;
-            var date = new Date(element.release_date*1000);
-            var month = date.getMonth() + 1;
-            element.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
+            if (element.release_date != undefined) {
+                var date = new Date(element.release_date*1000);
+                var month = date.getMonth() + 1;
+                element.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
+            } else {
+                element.release_date = "";
+            }
             if (element.cover != undefined)
                 element.cover = element.cover.source;
             else
