@@ -12,7 +12,7 @@ const { check } = require('express-validator/check');
  * @property {string} name
  * @property {Array.<string>} genre
  * @property {string} cover 
- * @property {Number} release_date Unix timestamp
+ * @property {string} release_date Unix timestamp
  * @property {string} id Format is <source>-Id of resource in source
  * @property {string} directed_by
  *  @property {any} social_data 
@@ -27,7 +27,7 @@ const { check } = require('express-validator/check');
  * @property {string} name
  * @property {string} genre 
  * @property {string} cover 
- * @property {Number} release_date Unix timestamp
+ * @property {string} release_date Unix timestamp
  * @property {string} directed_by
  * @property {string} description
  */
@@ -42,6 +42,17 @@ const { check } = require('express-validator/check');
  */
 
 
+ /**
+ * 
+ * @typedef Count
+ * @property {number} fb     Movies from facebook   
+ * @property {number} tmdb   Movies from the movie database
+ * @property {number} omdb   Movies from OMDB
+*  @property {number} custom   Movies made in application
+*  @property {number} total   Movies from OMDB
+ */
+
+
  //////////////////////////////////////////////////////////////
 
 // Import contact controller
@@ -49,7 +60,7 @@ var MovieController = require('../controllers/MovieController');
 
  /**
  * This route will add movie from tmdb to db
- * @route POST /movie/tmdb/{movie_id}
+ * @route POST /movies/tmdb/{movie_id}
  * @param {string} movie_id.param.required - TMDB movie id
  * @group Movies
  * @returns {Movie.model} 200 - Movie object
@@ -65,7 +76,7 @@ router.route('/tmdb/:movie_id')
 
 /**
  * This route will add movie from omdb to db
- * @route POST /movie/omdb/{movie_id}
+ * @route POST /movies/omdb/{movie_id}
  * @param {string} movie_id.param.required - IMDB id got from OMDB searcha
  * @group Movies
  * @returns {Movie.model} 200 - Movie object
@@ -80,9 +91,26 @@ router.route('/omdb/:movie_id')
 .post( MovieController.addOMDBMovie);
 
 
+
+/**
+ * This route will return movie count
+ * @route GET /movies/count
+ * @group Movies
+ * @returns {Count.model} 200 - Number of movies
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/count')
+.get( MovieController.count);
+
+
 /**
  * This route will return found movies from db, tmdb i omdb 
- * @route GET /search?term=blabla
+ * @route GET /movies/search?term=blabla
  * @param {string} term.query.required - Search term 
  * @group Movies
  * @returns {SearchResult.model} 200 - Movie object
@@ -99,7 +127,7 @@ router.route('/search/')
 
 /**
  * This route returns all movies in db
- * @route GET /movie
+ * @route GET /movies
  * @group Movies
  * @returns {Array.<Movie>} 200 - Array of movie objects 
  * @returns {Error.model}  500 - Server error
@@ -111,7 +139,7 @@ router.route('/search/')
  */
 /**
  * This route will create new movie and add it to list of liked movies of user that created it
- * @route POST /movie
+ * @route POST /movies
  * @param {CreateMovie.model} data.body.required - new movie
  * @group Movies
  * @returns {Movie.model} 201 - New movie
