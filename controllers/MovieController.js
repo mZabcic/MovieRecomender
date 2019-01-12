@@ -222,11 +222,9 @@ exports.removeMovie = function (req, res) {
 
 exports.search = function (req, res)  {
   var term = req.query.term;
-  var page = req.query.page;
   var page_tmdb = req.query.tmdb_page;
   var page_omdb = req.query.omdb_page;
   var returnObject = {};
-  page = page == undefined ? 1 : page;
   page_tmdb = page_tmdb == undefined ? 1 : page_tmdb;
   page_omdb = page_omdb == undefined ? 1 : page_omdb;
  if (term == undefined) {
@@ -235,35 +233,47 @@ exports.search = function (req, res)  {
   if (term.length < 3) {
     res.status(400).json({error : "Term must be at least 3 char long"});
   }
+  User.findOne({_id: req.user._id}).populate(['movies'])
+    .exec(function (err, u) {
   Movie
   .find({ "name": { "$regex":  term , "$options": "i" }})
   .sort({'name': 1})
   .exec(function(err, docs) {
       returnObject.db = docs;
-      tmdbSearch(term, returnObject, page_tmdb, res, page_omdb);
+      tmdbSearch(term, returnObject, page_tmdb, res, page_omdb, u);
   });
+});
 }
 
 
 
-const tmdbSearch = (term, returnObject, page, res, page_omdb) => {
+const tmdbSearch = (term, returnObject, page, res, page_omdb, u) => {
   sget.concat({
     url: config.moviedb_url + 'search/movie' + config.moviedb_apikey + '&query=' + term + '&page' + page,
     method: 'GET',
     json: true
 }, function (err, response, data) {
+    data.results.forEach((e) => {
+      e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path;
+      var newId = "tmdb-" + e.id;
+      e.userLiked = checkIfUserLikedMovie(u, newId) ? 1 : 0;
+    })
     returnObject.tmdb = data;
-    omdbSearch(term, returnObject, page_omdb, res);
+    omdbSearch(term, returnObject, page_omdb, res, u);
 });
 }
 
 
-const omdbSearch = (term, returnObject, page, res) => {
+const omdbSearch = (term, returnObject, page, res, u) => {
   sget.concat({
     url: config.omdb_url  + config.omdb_apikey + '&s=' + term + '&page=' + page + '&type=movie',
     method: 'GET',
     json: true
 }, function (err, response, data) {
+  data.Search.forEach((e) => {
+    var newId = "omdb-" + e.imdbID; 
+    e.userLiked = checkIfUserLikedMovie(u, newId) ? 1 : 0;
+  })
     returnObject.omdb = data;
     res.json(returnObject);
     
@@ -418,6 +428,7 @@ exports.count = (req, res) => {
 
 
 exports.recomend = (req, res) => {
+  var page = req.query.page == undefined ? 1 : req.query.page;
   User.findOne({_id: req.user._id}).populate(['movies'])
     .exec(function (err, u) {
       if (err) return err;
@@ -433,14 +444,16 @@ exports.recomend = (req, res) => {
       }
       var movie_id = movies[0].id;
       movie_id = movie_id.replace('tmdb-', '');
-
       sget.concat({
-        url: config.moviedb_url + 'movie/' + movie_id + '/recommendations' + config.moviedb_apikey ,
+        url: config.moviedb_url + 'movie/' + movie_id + '/recommendations' + config.moviedb_apikey + '&page=' + page ,
         method: 'GET',
         json: true
     }, function (err, response, data) {
       data.results.forEach((e) => {
-        e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path
+        e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path;
+        var newId = "tmdb-" + e.id;
+        e.userLiked = checkIfUserLikedMovie(u, newId) ? 1 : 0;
+        
       })
       return res.json(data);
     })
@@ -525,4 +538,11 @@ const makeMovieLeader = (u, genres) => {
   return movieArray;
 }
 
+
+const checkIfUserLikedMovie = (u, id) => {
+  console.log(id);
+  console.log(u.movies);
+  var check = u.movies.filter(el => el.id === id);
+  return check.length == 0 ? false : true;
+}
 
