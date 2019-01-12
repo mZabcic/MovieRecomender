@@ -390,3 +390,23 @@ exports.addOMDBMovie = (req, res) => {
 }
 
 
+exports.count = (req, res) => {
+  var object = {};
+  Movie.count({source : "FB"}, (err, fb) => {
+    object.fb = fb;
+    Movie.count({source : "CUSTOM"}, (err, custom) => {
+      object.custom = custom;
+      Movie.count({source : "OMDB"}, (err, omdb) => {
+        object.omdb = omdb;
+        Movie.count({source : "TMDB"}, (err, tmdb) => {
+          object.tmdb = tmdb;
+          object.total = fb+custom+omdb+tmdb;
+          res.json(object);
+        })
+      })
+      
+    })
+  })
+}
+
+

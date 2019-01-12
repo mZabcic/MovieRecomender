@@ -343,7 +343,7 @@ const createUser = function(accesToken, res) {
         data.facebook_token = accesToken;
         data.social = true;
 
-        data.role = "Admin";
+        data.role = "User";
         if (data.gender == 'male') {
             data.gender = 'M';
         } else {
