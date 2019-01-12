@@ -355,7 +355,11 @@ const createUser = function(accesToken, res) {
         var movies_list = [];
         var movie_ids = [];
         data.movies.data.forEach(function (element) {
-            element.id = 'FB-' + element.id
+            element.source = "FB";
+            element.id = 'FB-' + element.id;
+            var date = new Date(element.release_date*1000);
+            var month = date.getMonth() + 1;
+            element.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
             if (element.cover != undefined)
                 element.cover = element.cover.source;
             else

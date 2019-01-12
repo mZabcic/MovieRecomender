@@ -17,6 +17,7 @@ const { check } = require('express-validator/check');
  * @property {string} directed_by
  *  @property {any} social_data 
  * @property {string} description
+ * @property {string} source  FB,Custom,TMDB,OMDB
  */
 
 
@@ -48,7 +49,7 @@ var MovieController = require('../controllers/MovieController');
 
  /**
  * This route will add movie from tmdb to db
- * @route GET /movie/tmdb/{movie_id}
+ * @route POST /movie/tmdb/{movie_id}
  * @param {string} movie_id.param.required - TMDB movie id
  * @group Movies
  * @returns {Movie.model} 200 - Movie object
@@ -59,8 +60,25 @@ var MovieController = require('../controllers/MovieController');
  * @consumes application/json
  * @security JWT
  */
-router.route('/tmdb/:movie_id/')
+router.route('/tmdb/:movie_id')
 .post( MovieController.addTMDBMovie);
+
+/**
+ * This route will add movie from omdb to db
+ * @route POST /movie/omdb/{movie_id}
+ * @param {string} movie_id.param.required - IMDB id got from OMDB searcha
+ * @group Movies
+ * @returns {Movie.model} 200 - Movie object
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/omdb/:movie_id')
+.post( MovieController.addOMDBMovie);
+
 
 /**
  * This route will return found movies from db, tmdb i omdb 

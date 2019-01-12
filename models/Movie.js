@@ -34,7 +34,11 @@ var movieSchema = mongoose.Schema({
         type: String,
         required: false
       },
-      users: [{ type: Schema.Types.ObjectId, ref: 'user' }]
+      users: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+      source: {
+        type: String,
+        required: true
+      }
 });
 movieSchema.plugin(beautifyUnique);
 
