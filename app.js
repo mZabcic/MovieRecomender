@@ -8,6 +8,9 @@ var usersRouter = require('./routes/users');
 var movieRouter = require('./routes/movies');
 var config = require('./config');
 var jwt = require('express-jwt');
+var cron = require('node-cron');
+
+
 
 
 
@@ -89,6 +92,73 @@ app.use(function (err, req, res, next) {
     }
 }); 
 
+
+
+Movie = require('./models/Movie');
+const sget = require('simple-get')
+const log4js = require('log4js');
+log4js.configure({
+  appenders: { data: { type: 'file', filename: 'data.log' } },
+  categories: { default: { appenders: ['data'], level: 'info' } }
+});
+
+
+
+
+cron.schedule('0 1 * * *', () => {
+    const logger = log4js.getLogger('data');
+    updateTMDB();
+    updateOMDB();
+    logger.info("Social data updated");
+  }, {
+    scheduled: true,
+    timezone: "Europe/Zagreb"
+});
+
+const updateTMDB = () => {
+    Movie.find({source : "TMDB"}, (err, doc) => {
+        doc.forEach(e => {
+            var id = e.id.replace('tmdb-','');
+            sget.concat({
+                url: config.moviedb_url + 'movie/' + id + config.moviedb_apikey,
+                method: 'GET',
+                json: true
+            }, function (err, response, data) {
+                Movie.update({ _id: e._id }, { $set: { social_data: {
+                    "tmdb_vote_average": data.vote_average,
+                    "tmdb_vote_count": data.vote_count
+                  }}}, (err, docs) => {
+                    console.log(docs);
+                });
+            })
+        });
+    })
+}
+
+const updateOMDB = () => {
+    Movie.find({source : "OMDB"}, (err, doc) => {
+        doc.forEach(e => {
+            var id = e.id.replace('omdb-','');
+            sget.concat({
+                url: config.omdb_url + config.omdb_apikey + '&i=' + id,
+                method: 'GET',
+                json: true
+            }, function (err, response, data) {
+                Movie.update({ _id: e._id }, { $set: { social_data: {
+                    "omdb_rating": data.imdbRating,
+                    "omdb_vote_count": data.imdbVotes
+                  }}}, (err, docs) => {
+                    console.log(docs);
+                });
+            })
+        }); 
+    })
+}
+
+
 module.exports = app;
+
+
+
 
 
