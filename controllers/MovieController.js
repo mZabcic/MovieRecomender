@@ -296,6 +296,9 @@ exports.addTMDBMovie = (req, res) => {
          data.genres.forEach(e => {
             g.push(e.name);
          });
+         for (var i = 0; i < g.length; i++) {
+          g[i] = g[i].trim();
+        }
          var date = new Date(data.release_date);
          var month = date.getMonth() + 1;
           data.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
@@ -307,8 +310,8 @@ exports.addTMDBMovie = (req, res) => {
           release_date : data.release_date,
           description : data.overview,
           social_data : {
-            "tmdb-vote_average": data.vote_average,
-            "tmdb-vote_count": data.vote_count
+            "tmdb_vote_average": data.vote_average,
+            "tmdb_vote_count": data.vote_count
           },
           source : "TMDB"
         };
@@ -353,6 +356,9 @@ exports.addOMDBMovie = (req, res) => {
     }, function (err, response, data) {
       var g = [];
       g = data.Genre.split(',');
+      for (var i = 0; i < g.length; i++) {
+        g[i] = g[i].trim();
+      }
       var date = new Date(data.Released);
       var month = date.getMonth() + 1;
       data.Released = month + '/' + date.getDate() + '/' + date.getFullYear();
@@ -364,8 +370,8 @@ exports.addOMDBMovie = (req, res) => {
           release_date : data.Released,
           description : data.plot,
           social_data : {
-            "omdb-rating": data.imdbRating,
-            "omdb-vote_count": data.imdbVotes
+            "omdb_rating": data.imdbRating,
+            "omdb_vote_count": data.imdbVotes
           },
           source : "OMDB",
           directed_by : data.Director
@@ -407,6 +413,116 @@ exports.count = (req, res) => {
       
     })
   })
+}
+
+
+
+exports.recomend = (req, res) => {
+  User.findOne({_id: req.user._id}).populate(['movies'])
+    .exec(function (err, u) {
+      if (err) return err;
+      var genres = makeGenreLeader(u);
+      if (genres < 3) {
+        res.status(404).json({error : "Too few films from The Movie Database source for recomending, add some more"});
+      }
+      //Uzmi top 3 žanra
+      genres = genres.slice(0, 3);
+      var movies = makeMovieLeader(u, genres);
+      if (movies.length == 0) {
+        res.status(404).json({error : "Too few films from The Movie Database source for recomending, add some more"});
+      }
+      var movie_id = movies[0].id;
+      movie_id = movie_id.replace('tmdb-', '');
+
+      sget.concat({
+        url: config.moviedb_url + 'movie/' + movie_id + '/recommendations' + config.moviedb_apikey ,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+      data.results.forEach((e) => {
+        e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path
+      })
+      return res.json(data);
+    })
+
+      
+  });
+}
+
+
+
+const makeGenreLeader = (u) => {
+  var genres = {};
+  u.movies.forEach((e) => {
+    e.genre.forEach((g) => {
+      if(typeof(genres[g]) === "undefined"){
+        genres[g] = 1;
+    }else{
+      genres[g] = genres[g] + 1;
+    }
+    })
+  })
+  var genreArray = [];
+  for (var property in genres) {
+    if (genres.hasOwnProperty(property)) {
+      genreArray.push({name : property, count : genres[property]});
+    }
+  }
+
+  var compare = (a,b) => {
+    if (a.count < b.count)
+      return 1;
+    if (a.count > b.count)
+      return -1;
+    return 0;
+  }
+
+  genreArray.sort(compare);
+
+  return genreArray;
+}
+
+
+const makeMovieLeader = (u, genres) => {
+  var genreCompare = [];
+  genres.forEach((e) => {
+    genreCompare.push(e.name);
+  }
+  )
+  var movies = {};
+  var count = 0;
+  u.movies.forEach((e) => {
+    if (e.source != "TMDB" ) {
+      return;
+    }
+    e.genre.forEach((g) => {
+    if (genreCompare.indexOf(g) > 0) {
+      if(typeof(movies[e.id]) === "undefined"){
+        movies[e.id] = 1;
+      }else{
+        movies[e.id] = movies[e.id] + 1;
+      }
+      } 
+    })
+  })
+  var movieArray = [];
+  for (var property in movies) {
+    if (movies.hasOwnProperty(property)) {
+      movieArray.push({id : property, count : movies[property]});
+    }
+  }
+
+  var compare = (a,b) => {
+    if (a.count < b.count)
+      return 1;
+    if (a.count > b.count)
+      return -1;
+    return 0;
+  }
+
+  movieArray.sort(compare);
+
+  return movieArray;
 }
 
 
