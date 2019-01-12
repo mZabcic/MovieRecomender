@@ -371,6 +371,9 @@ const createUser = function(accesToken, res) {
             if (element.genre != undefined) {
                 var genres = [];
                 genres = element.genre.split('/');
+                for (var i = 0; i < genres.length; i++) {
+                    genres[i] = genres[i].trim();
+                }
                 element.genre = genres;
             } else {
                 genre = "";

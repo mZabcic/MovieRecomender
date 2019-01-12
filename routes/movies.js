@@ -36,8 +36,8 @@ const { check } = require('express-validator/check');
  * 
  * @typedef SearchResult
  * @property {{Array.<Movie>}} db     Movies from database   
- * @property {any} tmdb   Movies from the movie database
- * @property {any} omdb   Movies from OMDB
+ * @property {object} tmdb   Movies from the movie database
+ * @property {object} omdb   Movies from OMDB
 
  */
 
@@ -73,6 +73,22 @@ var MovieController = require('../controllers/MovieController');
  */
 router.route('/tmdb/:movie_id')
 .post( MovieController.addTMDBMovie);
+
+
+ /**
+ * This route will return movies from TMDB that they recommend for you based on genres you liked
+ * @route GET /movies/recommend
+ * @group Movies
+ * @returns {Array.<object>} 200 - Movies from 
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/recommend')
+.get( MovieController.recomend);
 
 /**
  * This route will add movie from omdb to db
