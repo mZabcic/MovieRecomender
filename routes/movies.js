@@ -94,7 +94,7 @@ router.route('/omdb/:movie_id')
 
 /**
  * This route will return movie count
- * @route POST /movies/count
+ * @route GET /movies/count
  * @group Movies
  * @returns {Count.model} 200 - Number of movies
  * @returns {Error.model}  500 - Server error
