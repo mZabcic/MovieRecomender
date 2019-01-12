@@ -20,9 +20,7 @@ const returnMovie = function(req, res) {
   }); 
 }
 
-const getSocialData = function(name) {
 
-}
 
 exports.get = function (req, res) {
   Movie.find({}, function(err, doc) {
@@ -540,8 +538,6 @@ const makeMovieLeader = (u, genres) => {
 
 
 const checkIfUserLikedMovie = (u, id) => {
-  console.log(id);
-  console.log(u.movies);
   var check = u.movies.filter(el => el.id === id);
   return check.length == 0 ? false : true;
 }

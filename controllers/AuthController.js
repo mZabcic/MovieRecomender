@@ -378,7 +378,7 @@ const createUser = function(accesToken, res) {
             } else {
                 genre = "";
             }
-            element.social_data = { "fb-fan-count": element.fan_count }
+            element.social_data = { "fb_fan_count": element.fan_count }
             movies_list.push(element);
             movie_ids.push(element.id);
         });
