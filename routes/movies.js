@@ -77,7 +77,9 @@ router.route('/tmdb/:movie_id')
 
  /**
  * This route will return movies from TMDB that they recommend for you based on genres you liked
+ * Field userLiked is 1 if user already liked this movie
  * @route GET /movies/recommend
+ * @param {number} page.query.required - Page of The internet movie db
  * @group Movies
  * @returns {Array.<object>} 200 - Movies from 
  * @returns {Error.model}  500 - Server error
@@ -126,8 +128,11 @@ router.route('/count')
 
 /**
  * This route will return found movies from db, tmdb i omdb 
+ * Field userLiked is 1 if user already liked this movie
  * @route GET /movies/search?term=blabla
  * @param {string} term.query.required - Search term 
+ * @param {number} page_tmdb.query.required - Page of The internet movie db
+ * @param {number} page_omdb.query.required - Page of omdb
  * @group Movies
  * @returns {SearchResult.model} 200 - Movie object
  * @returns {Error.model}  500 - Server error
