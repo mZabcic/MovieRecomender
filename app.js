@@ -121,6 +121,7 @@ cron.schedule('0 1 * * *', () => {
     const logger = log4js.getLogger('data');
     updateTMDB();
     updateOMDB();
+    updateGenres();
     logger.info("Social data updated");
   }, {
     scheduled: true,
