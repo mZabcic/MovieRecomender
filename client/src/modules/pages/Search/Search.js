@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Page } from "modules/components";
 import { logoutUser, getUser } from "modules/redux";
 
-class Profile extends PureComponent {
+class Search extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class Profile extends PureComponent {
     const { user } = this.props;
     return (
       <Page
-        title="MovieMonster - Profile"
+        title={`MovieMonster - ${user.name}`}
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
@@ -31,10 +31,11 @@ class Profile extends PureComponent {
   }
 }
 
+
 function mapStateToProps(state) {
   return { user: getUser(state) };
 }
 
 const mapDispatchToProps = { logoutUserAction: logoutUser };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
