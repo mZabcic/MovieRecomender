@@ -26,6 +26,7 @@ const expressValidator = require('express-validator')
 var app = express();
 
 app.use(cors());
+app.options('*', cors());
 
 var swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./swagger.json');
