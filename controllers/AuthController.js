@@ -460,6 +460,7 @@ const createUser = function(accesToken, res) {
                 movies_list = movies_list.filter(el => el.id !== e.id);
                 var movie_id1 = e.id.replace('FB-', '');
                 var obj = data.movies.data.find(obj => obj.id == movie_id1);
+                if (obj != undefined)
                 Movie.update({ _id: e._id }, { $set: { social_data: { "fb_fan_count": obj.fan_count }}}, (err, docs) => {
                     console.log(docs);
                 });
