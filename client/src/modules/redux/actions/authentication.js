@@ -1,13 +1,12 @@
 import { history } from 'modules/services';
 import { login, logout } from "modules/services";
 
-export const userConstants = {
-  USER_LOGIN_REQUEST: 'USER_LOGIN_REQUEST',
-  USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
-  USER_LOGIN_FAILURE: 'USER_LOGIN_FAILURE',
+export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
 
-  USER_LOGOUT: 'USER_LOGOUT',
-};
+export const USER_LOGOUT = 'USER_LOGOUT';
+
 
 export function loginUser(access_token, facebook_id) {
   return dispatch => {
@@ -15,8 +14,8 @@ export function loginUser(access_token, facebook_id) {
 
     login(access_token, facebook_id)
       .then(
-        user => {
-          dispatch(success(user));
+        data => {
+          dispatch(success(data));
           history.push('/');
         },
         error => {
@@ -25,13 +24,13 @@ export function loginUser(access_token, facebook_id) {
       );
   };
 
-  function request(user) { return { type: userConstants.USER_LOGIN_REQUEST } }
-  function success(user) { return { type: userConstants.USER_LOGIN_SUCCESS, payload: user.user } }
-  function failure(error) { return { type: userConstants.USER_LOGIN_FAILURE, error } }
+  function request(user) { return { type: USER_LOGIN_REQUEST } }
+  function success(data) { return { type: USER_LOGIN_SUCCESS, payload: data } }
+  function failure(error) { return { type: USER_LOGIN_FAILURE, error } }
 }
 
 export function logoutUser() {
   logout();
   history.push("/login");
-  return { type: userConstants.USER_LOGOUT };
+  return { type: USER_LOGOUT };
 }

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Page } from "modules/components";
-import { logoutUser } from "modules/redux";
+import { logoutUser, getUser } from "modules/redux";
 
 class Profile extends PureComponent {
   constructor(props) {
@@ -18,19 +18,20 @@ class Profile extends PureComponent {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <Page
         onLogoutClick={this.handleLogoutClick}
-        loggedIn>
+        loggedIn
+        user={user}>
         <div />
       </Page>
     );
   }
 }
 
-
 function mapStateToProps(state) {
-  return {};
+  return { user: getUser(state) };
 }
 
 const mapDispatchToProps = { logoutUserAction: logoutUser };
