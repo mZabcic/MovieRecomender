@@ -125,8 +125,8 @@ exports.new = function (req, res) {
 
 
     User.findOne({_id : req.user._id}, (err, doc) => {
-      if (doc.movies.indexOf(small._id) < 0) {
-        doc.movies.push(small._id);
+      if (doc.movies.indexOf(docs._id) < 0) {
+        doc.movies.push(docs._id);
         doc.save();
       }
       return res.status(201).send(docs);
