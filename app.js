@@ -26,7 +26,6 @@ const expressValidator = require('express-validator')
 var app = express();
 
 app.use(cors());
-app.options('*', cors());
 
 var swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./swagger.json');
@@ -67,11 +66,12 @@ let options = {
 };
 expressSwagger(options)
 
-
+/*
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
-});
+}); */
+ 
 // error handler, required as of 0.3.0
 app.use(function(err, req, res, next){
     res.status(400).json(err);
