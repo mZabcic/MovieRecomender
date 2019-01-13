@@ -325,6 +325,10 @@ exports.login = function (req, res) {
                 },
                 json: true
             }, function (err, response, data) {
+                if (data.error != undefined) {
+                    res.status(400).json(data);
+                    return
+                }
                 var movies = data.movies.data;
 
                 var userMovies = [];
