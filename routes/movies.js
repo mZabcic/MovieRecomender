@@ -58,6 +58,10 @@ const { check } = require('express-validator/check');
 // Import contact controller
 var MovieController = require('../controllers/MovieController');
 
+router.route('/genres/:genre')
+  .get( MovieController.getGenre);
+
+
  /**
  * This route will add movie from tmdb to db
  * @route POST /movies/tmdb/{movie_id}
@@ -229,6 +233,9 @@ router.route('/:movie_id')
   .get( MovieController.getById)
   .put( MovieController.update)
   .delete( MovieController.delete );
+
+
+
 
 
 /**

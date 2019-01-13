@@ -3,7 +3,7 @@ import config from 'config/default.json';
 export function login(access_token, facebook_id) {
   const requestOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ access_token, facebook_id })
   };
 
