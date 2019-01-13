@@ -58,6 +58,19 @@ const { check } = require('express-validator/check');
 // Import contact controller
 var MovieController = require('../controllers/MovieController');
 
+/**
+ * This route will return movies by genre
+ * @route GET /movie/genres/{genre}
+ * @param {string} genre.param.required - Genre name
+ * @group Movies
+ * @returns {Array.<Movie>} 200 - Movies objects
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
 router.route('/genres/:genre')
   .get( MovieController.getGenre);
 
