@@ -27,26 +27,27 @@ export default class Page extends PureComponent {
 
 
   render() {
-    const { children, loggedIn, onLogoutClick } = this.props;
+    const { children, loggedIn, onLogoutClick, user } = this.props;
     return (
       <div className="limiter">
-        {loggedIn && <header >
-          <div>
-            <a href="/">Home</a>
-            <a href="/my-movies">My Movies</a>
-            <a href="/top-movies">Top Movies</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-          </div>
-          <form onSubmit={this.handleSearchSubmit}>
-            <input type="text" onChange={this.handleSearchChange} />
-            <input type="submit" value="Search" />
-          </form>
-          <div>
-            <a href="/profile">Profile</a>
-            <button onClick={onLogoutClick}>Logout</button>
-          </div>
-        </header>
+        {loggedIn &&
+          <header >
+            <div>
+              <a href="/">Home</a>
+              <a href="/my-movies">My Movies</a>
+              <a href="/top-movies">Top Movies</a>
+              <a href="/about">About</a>
+              <a href="/contact">Contact</a>
+            </div>
+            <form onSubmit={this.handleSearchSubmit}>
+              <input type="text" onChange={this.handleSearchChange} />
+              <input type="submit" value="Search" />
+            </form>
+            <div>
+              <a href="/profile">Profile</a>
+              <button onClick={onLogoutClick}>Log Out</button>
+            </div>
+          </header>
         }
         <div className="container">
           {children}

@@ -17,6 +17,7 @@ class Login extends PureComponent {
 
   handleFacebook(response) {
     const { loginUserAction } = this.props;
+    console.log({ response });
     loginUserAction(response.accessToken, response.id);
   }
 

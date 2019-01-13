@@ -1,12 +1,13 @@
 import {
   combineReducers
 } from 'redux';
+import auth from "./auth";
 
-function placeholderReducer(state = {}, action) {
+function placeholder(state = {}, action) {
   switch (action.type) {
     default:
       return state;
   }
 }
 
-export default combineReducers({ placeholder: placeholderReducer });
+export default combineReducers({ placeholder, auth });

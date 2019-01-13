@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Page } from "modules/components";
-import { logoutUser } from "modules/redux";
+import { logoutUser, getUser } from "modules/redux";
 
 class TopMovies extends PureComponent {
   constructor(props) {
@@ -18,10 +18,12 @@ class TopMovies extends PureComponent {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <Page
         onLogoutClick={this.handleLogoutClick}
-        loggedIn>
+        loggedIn
+        user={user}>
         <div />
       </Page>
     );
@@ -30,7 +32,7 @@ class TopMovies extends PureComponent {
 
 
 function mapStateToProps(state) {
-  return {};
+  return { user: getUser(state) };
 }
 
 const mapDispatchToProps = { logoutUserAction: logoutUser };
