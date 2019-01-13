@@ -9,4 +9,4 @@ function placeholderReducer(state = {}, action) {
   }
 }
 
-export default combineReducers(placeholderReducer);
+export default combineReducers({ placeholder: placeholderReducer });
