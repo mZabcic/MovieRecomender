@@ -21,6 +21,7 @@ class About extends PureComponent {
     const { user } = this.props;
     return (
       <Page
+        title="MovieMonster - About"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
@@ -31,7 +32,7 @@ class About extends PureComponent {
         </div>
         <div>
           <p>Ante Bundović</p>
-          <p>Lorem ipsum dolor sit amet, persius iuvaret per ut, est an dolores repudiare tincidunt. Cu est insolens phaedrum antiopam, pri cu viderer menandri, duo te clita numquam. Eum te quem deserunt, lorem exerci et pri. Vis eu offendit definitiones. In errem essent mel.</p>
+          <p>Ante is 23 year old guy from Bjelovar city. He is a senior year student at FER, University of Zagreb. He mostly codes in .Net and React, is a football referee and would like to have a dog one day, a German shepard.</p>
           <p>ante.bundovic@fer.hr</p>
         </div>
         <div>

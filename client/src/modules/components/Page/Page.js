@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
+import { history } from "modules/services";
 import "./Page.css";
+import { Helmet } from "react-helmet";
 
 export default class Page extends PureComponent {
   constructor(props) {
@@ -14,22 +16,25 @@ export default class Page extends PureComponent {
   }
 
   handleSearchChange(event) {
-    this.setState({ search: event });
-
-    console.log(event);
+    const { value } = event.target;
+    this.setState({ search: value });
   }
 
   handleSearchSubmit() {
     const { search } = this.state;
     console.log(search);
+    history.push(`/search?query=${search}`);
   }
 
 
 
   render() {
-    const { children, loggedIn, onLogoutClick, user } = this.props;
+    const { children, loggedIn, onLogoutClick, user, title } = this.props;
     return (
       <div className="limiter">
+        <Helmet>
+          <title>{title}</title>
+        </Helmet>
         {loggedIn &&
           <header >
             <div>
@@ -80,7 +85,8 @@ export default class Page extends PureComponent {
 }
 
 Page.defaultProps = {
-  loggedIn: false
+  loggedIn: false,
+  title: "MovieMonster"
 }
 
 

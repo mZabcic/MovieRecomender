@@ -6,10 +6,10 @@ import { Login } from "modules/pages/Login";
 import { Contact } from "modules/pages/Contact";
 import { TopMovies } from "modules/pages/TopMovies";
 import { MyMovies } from 'modules/pages/MyMovies';
+import { Search } from "modules/pages/Search";
 import { PrivateRoute } from "modules/components";
 import { Router, Route, Switch } from "react-router-dom";
 import { history } from "modules/services";
-import { fetchUser } from '../redux/actions/user';
 
 export default class App extends PureComponent {
   render() {

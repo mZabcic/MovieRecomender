@@ -22,6 +22,7 @@ class Home extends PureComponent {
     const { user } = this.props;
     return (
       <Page
+        title="MovieMonster - Home"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>

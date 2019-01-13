@@ -21,6 +21,7 @@ class MyMovies extends PureComponent {
     const { user } = this.props;
     return (
       <Page
+        title="MovieMonster - My Movies"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
