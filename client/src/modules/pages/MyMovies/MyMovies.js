@@ -1,11 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import './Home.css';
-import { Page } from 'modules/components';
-import { logoutUser } from 'modules/redux';
+import { Page } from "modules/components";
+import { logoutUser } from "modules/redux";
 
-class Home extends PureComponent {
+class MyMovies extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -29,10 +28,11 @@ class Home extends PureComponent {
   }
 }
 
+
 function mapStateToProps(state) {
   return {};
 }
 
 const mapDispatchToProps = { logoutUserAction: logoutUser };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyMovies));
