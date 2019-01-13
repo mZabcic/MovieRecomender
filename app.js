@@ -186,12 +186,12 @@ const updateWeather = () => {
         json: true
     }, function (err, response, data) {
         Weather.findOne({id : 3186886}, (err, doc) => {
-            User.findByIdAndUpdate(
+            Weather.findByIdAndUpdate(
                 doc._id,
                 data,
                 { new: true
                 },
-                (err, user) => {
+                (err, weather) => {
                     if (err) logger.info("Weather data not updated");
                     else 
                     logger.info("Weather data updated");
