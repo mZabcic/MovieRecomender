@@ -317,8 +317,67 @@ exports.login = function (req, res) {
         else {
             user.facebook_token = req.body.facebook_token;
             user.save();
-            var token = jwt.sign({ _id: user._id, email: user.email, role: user.role, sub: user._id, iat: Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
-            res.status(200).json({ user: user, token: token });
+            sget.concat({
+                url: 'https://graph.facebook.com/v3.1/me?fields=id,name,email,first_name,gender,last_name,birthday,movies{genre,name,cover,release_date,directed_by,fan_count,description},music{name,cover,genre,bio,band_members}',
+                method: 'GET',
+                headers: {
+                    Authorization: 'Bearer ' + req.body.access_token
+                },
+                json: true
+            }, function (err, response, data) {
+                if (data.error != undefined) {
+                    res.status(400).json(data);
+                    return
+                }
+                var movies = data.movies.data;
+
+                var userMovies = [];
+                movies.forEach((e) => {
+                    
+                    e.id = 'FB-' + e.id;
+                    
+                    Movie.update({ id: e.id }, { $set: { social_data: { "fb_fan_count": e.fan_count }}}, (err, docs) => {
+                        if (docs.n == 0) {
+                            element = e;
+                            element.source = "FB";
+                            element.id = element.id;
+                            if (element.release_date != undefined) {
+                                var date = new Date(element.release_date*1000);
+                                var month = date.getMonth() + 1;
+                                element.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
+                            } else {
+                                element.release_date = "";
+                            }
+                            if (element.cover != undefined)
+                                element.cover = element.cover.source;
+                            else
+                                element.cover = "";
+                            if (element.genre != undefined) {
+                                var genres = [];
+                                genres = element.genre.split('/');
+                                for (var i = 0; i < genres.length; i++) {
+                                    genres[i] = genres[i].trim();
+                                }
+                                element.genre = genres;
+                            } else {
+                                genre = "";
+                            }
+                            element.social_data = { "fb_fan_count": element.fan_count }
+                            var movie = new Movie(element);
+                            movie.save(function (err, m) {
+                                if (m != undefined) {
+                                    user.movies.push(m._id);
+                                    user.save();
+                                }
+                            })
+                        }  
+                    });
+                })
+                
+                var token = jwt.sign({ _id: user._id, email: user.email, role: user.role, sub: user._id, iat: Math.floor(Date.now() / 1000) }, config.secret, config.JWT);
+                res.status(200).json({ user: user, token: token });
+            })
+            
         }
     });
 
@@ -387,6 +446,11 @@ const createUser = function(accesToken, res) {
             docs.forEach((e) => {
                 existingMovies.push(e._id);
                 movies_list = movies_list.filter(el => el.id !== e.id);
+                var movie_id1 = e.id.replace('FB-', '');
+                var obj = data.movies.data.find(obj => obj.id == movie_id1);
+                Movie.update({ _id: e._id }, { $set: { social_data: { "fb_fan_count": obj.fan_count }}}, (err, docs) => {
+                    console.log(docs);
+                });
             });
             if (movies_list.length == 0) {
                 data.movies = existingMovies;
