@@ -6,11 +6,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 //var musicRouter = require('./routes/music');
 var movieRouter = require('./routes/movies');
+var weatherRouter = require('./routes/weather');
 var config = require('./config');
 var jwt = require('express-jwt');
 var cron = require('node-cron');
 var timeout = require('connect-timeout'); //express v4
-
+var cors = require('cors');
 
 
 
@@ -23,6 +24,8 @@ const expressValidator = require('express-validator')
 
 
 var app = express();
+
+app.use(cors());
 
 var swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./swagger.json');
@@ -91,6 +94,8 @@ app.use('/'+ config.version + '/', indexRouter);
 app.use('/'+ config.version + '/users',jwt({ secret: config.secret, isRevoked : config.isRevoked}), usersRouter);
 //app.use('/'+ config.version + '/music',jwt({ secret: config.secret, isRevoked : config.isRevoked}), musicRouter);
 app.use('/'+ config.version + '/movies',jwt({ secret: config.secret, isRevoked : config.isRevoked}), movieRouter);
+app.use('/'+ config.version + '/weather',jwt({ secret: config.secret, isRevoked : config.isRevoked}), weatherRouter);
+
 
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -120,6 +125,16 @@ cron.schedule('0 1 * * *', () => {
     scheduled: true,
     timezone: "Europe/Zagreb"
 });
+
+
+
+cron.schedule('0,30 * * * *', () => {
+    updateWeather();
+  }, {
+    scheduled: true,
+    timezone: "Europe/Zagreb"
+});
+
 
 const updateTMDB = () => {
     Movie.find({source : "TMDB"}, (err, doc) => {
@@ -158,6 +173,21 @@ const updateOMDB = () => {
                 });
             })
         }); 
+    })
+}
+
+const updateWeather = () => {
+    const logger = log4js.getLogger('data');
+    logger.info("Weather data updated");
+    sget.concat({
+        url: config.weather_url + '?id=3186886&units=metric'  + config.weather_apikey,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+        var weather = new Weather(data);
+        weather.save((err, w) => {
+            return res.json(w);
+        });
     })
 }
 
