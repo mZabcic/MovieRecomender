@@ -562,3 +562,45 @@ exports.getGenre = function (req, res) {
     res.json(doc);
   }); 
 };
+
+
+exports.getGenreCount = function (req, res) {
+ 
+  Movie.find({}, function(err, doc) {
+    if (err) {
+      res.status(500).json(err);
+      return;
+    }
+    if (!doc) {
+      res.status(404).json({error : "No data found"});
+      return;
+    }
+    var genres = {};
+  doc.forEach((e) => {
+    e.genre.forEach((g) => {
+      if(typeof(genres[g]) === "undefined"){
+        genres[g] = 1;
+    }else{
+      genres[g] = genres[g] + 1;
+    }
+    })
+  })
+  var genreArray = [];
+  for (var property in genres) {
+    if (genres.hasOwnProperty(property)) {
+      genreArray.push({name : property, count : genres[property]});
+    }
+  }
+
+  var compare = (a,b) => {
+    if (a.count < b.count)
+      return 1;
+    if (a.count > b.count)
+      return -1;
+    return 0;
+  }
+
+  genreArray.sort(compare);
+  res.json(genreArray);
+  }); 
+};

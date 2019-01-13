@@ -42,6 +42,14 @@ const { check } = require('express-validator/check');
  */
 
 
+/**
+ * 
+ * @typedef GenreCount 
+ * @property {string} name   Genre name
+ * @property {number} count   Genre count
+ */
+
+
  /**
  * 
  * @typedef Count
@@ -59,8 +67,25 @@ const { check } = require('express-validator/check');
 var MovieController = require('../controllers/MovieController');
 
 /**
+ * This route will return all genres and number of movies in that genre
+ * @route GET /movies/genres
+ * @group Movies
+ * @returns {Array.<GenreCount>} 200 - Genre count objects
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/genres')
+  .get( MovieController.getGenreCount);
+
+
+
+/**
  * This route will return movies by genre
- * @route GET /movie/genres/{genre}
+ * @route GET /movies/genres/{genre}
  * @param {string} genre.param.required - Genre name
  * @group Movies
  * @returns {Array.<Movie>} 200 - Movies objects
