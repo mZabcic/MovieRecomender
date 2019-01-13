@@ -543,3 +543,22 @@ const checkIfUserLikedMovie = (u, id) => {
   return check.length == 0 ? false : true;
 }
 
+
+
+
+exports.getGenre = function (req, res) {
+  var genre_name = req.params.genre.toLowerCase();
+  genre_name =  genre_name.charAt(0).toUpperCase() +  genre_name.slice(1);
+ 
+  Movie.find({genre : genre_name}, function(err, doc) {
+    if (err) {
+      res.status(500).json(err);
+      return;
+    }
+    if (!doc) {
+      res.status(404).json({error : "No data found"});
+      return;
+    }
+    res.json(doc);
+  }); 
+};
