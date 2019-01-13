@@ -184,10 +184,19 @@ const updateWeather = () => {
         method: 'GET',
         json: true
     }, function (err, response, data) {
-        var weather = new Weather(data);
-        weather.save((err, w) => {
-            return res.json(w);
-        });
+        Weather.findOne({id : 3186886}, (err, doc) => {
+            User.findByIdAndUpdate(
+                doc._id,
+                data,
+                { new: true
+                },
+                (err, user) => {
+                    if (err) logger.info("Weather data not updated");
+                    else 
+                    logger.info("Weather data updated");
+                }
+            )
+        })
     })
 }
 
