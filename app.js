@@ -13,7 +13,7 @@ var cron = require('node-cron');
 var timeout = require('connect-timeout'); //express v4
 var cors = require('cors');
 
-
+const Weather = require('./models/Weather');
 
 
 // Import Body parser
