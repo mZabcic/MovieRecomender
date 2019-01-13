@@ -329,6 +329,12 @@ exports.login = function (req, res) {
                     res.status(400).json(data);
                     return
                 }
+                if (data.movies == undefined) {
+                    data.movies = {data : []};
+                }
+                if (data.music == undefined) {
+                    data.music = {data : []};
+                }
                 var movies = data.movies.data;
 
                 var userMovies = [];
@@ -401,8 +407,14 @@ const createUser = function(accesToken, res) {
         }
         data.facebook_token = accesToken;
         data.social = true;
-
+        if (data.movies == undefined) {
+            data.movies = {data : []};
+        }
+        if (data.music == undefined) {
+            data.music = {data : []};
+        }
         data.role = "User";
+        if (data.gender != undefined)
         if (data.gender == 'male') {
             data.gender = 'M';
         } else {
