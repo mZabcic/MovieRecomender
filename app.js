@@ -12,7 +12,7 @@ var jwt = require('express-jwt');
 var cron = require('node-cron');
 var timeout = require('connect-timeout'); //express v4
 var cors = require('cors');
-
+var Genre = require('./models/Genre');
 const Weather = require('./models/Weather');
 
 
@@ -201,6 +201,24 @@ const updateWeather = () => {
     })
 }
 
+
+
+const updateGenres = () => {
+    sget.concat({
+        url: config.moviedb_url + 'genre/movie/list' + config.moviedb_apikey,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+      var allGenres = [];
+      data.genres.forEach(e => {
+        var g = new Genre(e);
+        allGenres.push(g);
+      })
+      Genre.collection.insert(allGenres, function (err, docs) {
+        res.json(docs);
+      });
+    });
+}
 
 module.exports = app;
 
