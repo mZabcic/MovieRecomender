@@ -324,6 +324,7 @@ exports.addTMDBMovie = (req, res) => {
       if (data.id == "tmdb-undefined") {
         return res.status(400).json({error : "Movie doesnt exist"});
       }
+     
       var g = [];
       if (data.genres != undefined)
          data.genres.forEach(e => {
@@ -331,6 +332,10 @@ exports.addTMDBMovie = (req, res) => {
          });
          for (var i = 0; i < g.length; i++) {
           g[i] = g[i].trim();
+        }
+        var imdbLink = "";
+        if (data.imdb_id != undefined) {
+          imdbLink = 'https://www.imdb.com/title/' + data.imdb_id
         }
          var date = new Date(data.release_date);
          var month = date.getMonth() + 1;
@@ -346,7 +351,8 @@ exports.addTMDBMovie = (req, res) => {
             "tmdb_vote_average": data.vote_average,
             "tmdb_vote_count": data.vote_count
           },
-          source : "TMDB"
+          source : "TMDB",
+          link : imdbLink
         };
         Movie.create(movie, function (err, small) {
           if (err) return  res.json(err);;
@@ -394,6 +400,10 @@ exports.addOMDBMovie = (req, res) => {
       }
       var date = new Date(data.Released);
       var month = date.getMonth() + 1;
+      var imdbLink = "";
+      if (data.imdbID != undefined) {
+        imdbLink = 'https://www.imdb.com/title/' + data.imdbID
+      }
       data.Released = month + '/' + date.getDate() + '/' + date.getFullYear();
         var movie = {
           name : data.Title,
@@ -407,7 +417,8 @@ exports.addOMDBMovie = (req, res) => {
             "omdb_vote_count": data.imdbVotes
           },
           source : "OMDB",
-          directed_by : data.Director
+          directed_by : data.Director,
+          link : imdbLink
         };
         Movie.create(movie, function (err, small) {
           if (err) return  res.json(err);;
