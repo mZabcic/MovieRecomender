@@ -12,7 +12,7 @@ class Form2 extends React.Component {
 	    const data = await api_call.json(); 
 	  	this.setState ( { 
 	  		tracks : data.tracks.track,
-	    });
+	    }); 
    	}
 
   	createTable =  () => {
@@ -23,7 +23,7 @@ class Form2 extends React.Component {
 	    if(len > 0 ) {
 	    for (let i = 0; i < len; i++) { 
 	      //Create the parent and add the children
-	      table.push(<p>{this.state.tracks[i].name}</p>)
+	      table.push(<p className="song"><a href={this.state.tracks[i].url}>{this.state.tracks[i].name}</a></p>)
 	    }
 		}
 	    return table
@@ -37,7 +37,7 @@ class Form2 extends React.Component {
 	render() { 
 		return ( 
 			<div className="greySection">
-			<p className="artistsTitle">TOP 10 tracks according to <b>last.fm</b></p>
+			<p className="artistsTitle">TOP 10 trending tracks according to <b>last.fm</b></p>
 			<hr/>
 				{this.createTable()}
 			</div>
