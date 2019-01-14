@@ -59,14 +59,14 @@ class TopMovies extends PureComponent {
         title="MovieMonster - Top Movies"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
-        user={user}>
-        <div>
-          <div>
+        user={user}>        
+        <div className="moviesHomeSection topMoviesSection">
+          <div className="topMovie">
             {tmdbMovies ? (tmdbMovies.length > 0 && tmdbMovies.map((movieEntry, index) =>
               <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
                 index={index} source="TMDB" />)) : "Nema rezultata"}
           </div>
-          <div>
+          <div className="topMovie">
             {dbMovies ? (dbMovies.length > 0 && dbMovies.map((movieEntry, index) =>
               <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
                 source="DB" />)) : "Nema rezultata"}

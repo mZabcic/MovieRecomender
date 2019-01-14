@@ -34,7 +34,7 @@ class MovieEntry extends PureComponent {
   }
 
   handleFavourite(e) {
-    console.log({ e });
+    console.log( "handle favorite" );
     e.preventDefault();
     let movie = this.props.movie;
     // ADD TO FAVOURITE
@@ -65,6 +65,17 @@ class MovieEntry extends PureComponent {
       else if ((movie.source ? movie.source : this.props.source) == "OMDB") {
         console.log("aaaaaaaaaaaaa");
       }
+      else{
+        fetch(`${config.apiUrl}/movies/tmdb/` + movie.id, requestOptionsPost)
+          .then(handleResponse => {
+            if (handleResponse.ok) {
+              this.setState({
+                favourite: !this.state.favourite
+              })
+            }
+          })
+          .then(movie => { });
+      }
     }
     // DELETE
     else {
@@ -86,7 +97,7 @@ class MovieEntry extends PureComponent {
     return (
       <div>
         <div className="movieBox">
-        <span className="glyphicon glyphicon-star-empty"></span>
+        <span onClick={this.handleFavourite} className={this.state.favourite ? "glyphicon glyphicon-star" : "glyphicon glyphicon-star-empty"}></span>
           <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
@@ -95,8 +106,7 @@ class MovieEntry extends PureComponent {
               <p>{movie.description ? movie.description : movie.overview}</p>
               <p><b>Released:</b> {home ? movie.released : movie.release_date}</p>
               <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
-                movie.social_data.tmdb_vote_average : "unknown")))}</p>
-              <button onClick={this.handleFavourite}>KLIKNI</button>
+                movie.social_data.tmdb_vote_average : "unknown")))}</p> 
             </div>
           </div>
         </div>

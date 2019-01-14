@@ -129,6 +129,7 @@ body {
   margin-bottom: 15px;
   border-radius: 20px; 
   width: 98%;
+  position: relative;
 }
 
 .movieBox p {
@@ -326,4 +327,39 @@ body {
 .myMoviesSection {
   display: table;
   margin: 50px auto;
+}
+
+.glyphicon-star-empty {
+  position: absolute;
+  right: 0; 
+  right: 20px;
+  top: 10px;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.glyphicon-star {
+  position: absolute;
+  right: 0; 
+  right: 20px;
+  top: 10px;
+  font-size: 2em;
+  color: #dddd05; 
+  cursor: pointer;
+}
+
+.topMoviesSection {
+  display: flex;
+  margin: 50px auto;
+  max-width: 80%;
+}
+.topMovie {
+  width: 50%;
+}
+
+.topMovie:nth-child(even) {
+  margin-left: 10px;
+}
+.topMovie:nth-child(odd) {
+  margin-right: 10px;
 }
