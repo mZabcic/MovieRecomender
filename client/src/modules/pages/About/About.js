@@ -25,26 +25,33 @@ class About extends PureComponent {
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
-        <div>
-          <p>Ivan Ivkošić</p>
-          <p>Lorem ipsum dolor sit amet, persius iuvaret per ut, est an dolores repudiare tincidunt. Cu est insolens phaedrum antiopam, pri cu viderer menandri, duo te clita numquam. Eum te quem deserunt, lorem exerci et pri. Vis eu offendit definitiones. In errem essent mel.</p>
-          <p>ivan.ivkosic@fer.hr</p>
+        <div className="profilesWrapper">
+          <div className="profileBox">
+            <p className="title">Ivan Ivkošić</p>
+            <hr/>
+            <p>Ivan is a 22 year old guy from Imotski. His mother tongue is Java but unfortunately due to occasions he is doing PHP and frontend things mostly for now. He wants to have a kangaroo one day.</p>
+            <p>ivan.ivkosic@fer.hr</p>
+          </div>
+          <div className="profileBox">
+            <p className="title">Ante Bundović</p>
+            <hr/>
+            <p>Ante is 23 year old guy from Bjelovar city. He is a senior year student at FER, University of Zagreb. He mostly codes in .Net and React, is a football referee and would like to have a dog one day, a German shepard.</p>
+            <p>ante.bundovic@fer.hr</p>
+          </div>
+          <div className="profileBox">
+            <p className="title">Mislav Žabčić</p>
+            <hr/>
+            <p>Mislav Žabčić was born in Zagreb but raised in Samobor. He is on his senior year of studies at FER, University of Zagreb. His main area of expertise is web site design and web app design. Languages he likes the most are PHP, JavaScript, TypeScript and his favorite frameworks are Laravel, Lumen, Angular and jQuerry.</p>
+            <p>mislav.zabcic@fer.hr</p>
+          </div>
+          <div className="profileBox">
+            <p className="title">Juraj Pejnović</p>
+            <hr/>
+            <p>Juraj is a 23 year old guy from Sisak, Croatia. Currently he is studying Software Engineering at Fer, University of Zagreb. His main interests are C, C++, Java, Javascript, C#, Arduino C, Project Managment, Public speaking. in his free time he loves dancing, boxing and listening to audiobooks. He is member of BEST (Board of European Students of Technology) so he travels a lot all over Europe.</p>
+            <p>juraj.pejnovic@fer.hr</p>
+          </div>
         </div>
-        <div>
-          <p>Ante Bundović</p>
-          <p>Ante is 23 year old guy from Bjelovar city. He is a senior year student at FER, University of Zagreb. He mostly codes in .Net and React, is a football referee and would like to have a dog one day, a German shepard.</p>
-          <p>ante.bundovic@fer.hr</p>
-        </div>
-        <div>
-          <p>Mislav Žabčić</p>
-          <p>Lorem ipsum dolor sit amet, persius iuvaret per ut, est an dolores repudiare tincidunt. Cu est insolens phaedrum antiopam, pri cu viderer menandri, duo te clita numquam. Eum te quem deserunt, lorem exerci et pri. Vis eu offendit definitiones. In errem essent mel.</p>
-          <p>mislav.zabcic@fer.hr</p>
-        </div>
-        <div>
-          <p>Juraj Pejnović</p>
-          <p>Juraj is a 23 year old guy from Sisak, Croatia. Currently he is studying Software Engineering at Fer, University of Zagreb. His main interests are C, C++, Java, Javascript, C#, Arduino C, Project Managment, Public speaking. in his free time he loves dancing, boxing and listening to audiobooks. He is member of BEST (Board of European Students of Technology) so he travels a lot all over Europe.</p>
-          <p>juraj.pejnovic@fer.hr</p>
-        </div>
+        &nbsp;
       </Page>
     );
   }
