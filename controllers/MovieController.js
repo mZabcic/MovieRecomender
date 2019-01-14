@@ -374,7 +374,7 @@ exports.addOMDBMovie = (req, res) => {
     } else {
 
       sget.concat({
-        url: config.omdb_url + config.omdb_apikey + '&i=' + req.params.movie_id ,
+        url: config.omdb_url + config.omdb_apikey + '&i=' + req.params.movie_id + '&plot=full',
         method: 'GET',
         json: true
     }, function (err, response, data) {
@@ -392,7 +392,7 @@ exports.addOMDBMovie = (req, res) => {
           id : gId,
           genre : g,
           release_date : data.Released,
-          description : data.plot,
+          description : data.Plot,
           social_data : {
             "omdb_rating": data.imdbRating,
             "omdb_vote_count": data.imdbVotes

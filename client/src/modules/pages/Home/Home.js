@@ -4,6 +4,9 @@ import { withRouter } from "react-router-dom";
 import './Home.css';
 import { Page } from 'modules/components';
 import { logoutUser, getUser } from 'modules/redux';
+import Form2 from "modules/components/Form2";
+import Weather from "modules/components/Weather";
+import HomeMovies from "modules/components/HomeMovies";
 
 class Home extends PureComponent {
   constructor(props) {
@@ -25,8 +28,14 @@ class Home extends PureComponent {
         title="MovieMonster - Home"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
-        user={user}>
-        <div />
+        user={user}> 
+      
+      <table className="homeTable">
+        <tr>
+          <td ><HomeMovies/></td>
+          <td><Weather/><Form2/></td>
+        </tr>      
+      </table> 
       </Page>
     );
   }
