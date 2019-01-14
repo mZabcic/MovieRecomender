@@ -1,18 +1,245 @@
-
-.container{
-  width: 100%;  
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
+.loginBut {
+  display: table;
+  margin: 0 auto;
+  margin-top: 100px; 
+}
+.tit {
+  text-align: center;
+  font-weight: bold;
+  font-size: 3em; 
+  margin-bottom: 100px;
+}
+.profileSection {
+  width: 400px;
+  margin: auto;
+  background: #f4f4f4;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+} 
+.profileSection img {
+  display: table;
+  margin: 0 auto;
+}
+.weatherBut {
+  display: table;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.flexDiv{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;  
-  background-position: center;
+}
+.flexDiv div {
+  width: 50%;
+}
+
+.textline {
+  background-color: transparent;
+  color: #000;
+  outline: none;
+  outline-style: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #90a 1px;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+}
+
+
+.weatherSection {
+  background: #f4f4f4;
+  display: inline-block;
+  width: auto;
+  padding: 20px;
+  text-align: center; 
+  border-radius: 15px;
+}
+.weatherImg {
+  width: 40%;
+  margin: 0 auto;
+  display: table;
+  margin-bottom: 20px;
+}
+
+.greySection {
+  width: 100%;
+  background-color: #f4f4f4;
+  text-align: center;
+  margin-top: 10px;
+  padding: 20px; 
+  border-radius: 15px;
+}
+
+.greySection hr, .weatherSection hr, .moviesHomeSection hr { 
+  border: 2px solid #80b3ff;
+  border-radius: 3px;
+  width: 60%;
+  background-color: #80b3ff;
+  margin: 0 auto;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.homeTable {
+  width: 99%;
+  margin: 0 auto; 
+  padding-bottom: 50px;
+}
+
+.homeTable td:nth-child(1) {
+  width: 70%;  
+  text-align: center;
+}
+
+.homeTable td {
+  vertical-align: top;
+}
+
+.app {
+  background: url("/img/bg-01.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url("./bg-01.jpg")
+  padding: 15px;
+  padding-bottom: 0;
+  padding-top: 70px;
+  min-height: 100vh;
+}
+
+body {
+  padding: 0;
+}
+
+.moviesHomeSection {
+    background: #f4f4f4;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 750px;   
+    margin-bottom: 70px;
+}
+
+.moviesHomeSection img {
+  width: 130px;
+  margin-right: 10px;
+}
+.movieBox {
+  background: white;
+  padding: 10px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 98%;
+}
+
+.movieBox p {
+  font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+}
+
+.movieFlex {
+  display: flex;
+  align-items: center;
+}
+
+.moviesHomeSection .movieBox:hover {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  transition: all .3s;
+}
+
+.moviesHomeSection a:hover {
+  text-decoration: none !important;
+  color: black;
+}
+
+.footer {
+  color: #fff;
+  line-height: 2em;     
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d0289b+0,3410ae+100 */
+  background: #440753; /* Old browsers */
+  background: -moz-linear-gradient(left, #440753 0%, #1b1051 60%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #440753 0%,#1b1051 60%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #440753 0%,#1b1051 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#440753', endColorstr='#1b1051',GradientType=1 ); /* IE6-9 */
+  font-size: 15px;
+  padding: 3px;
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+}
+.holder {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  margin-bottom: 0px;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+.holder ul {
+  list-style: none;
+}
+.holder li {
+  display: inline-block;
+}
+.footer-list {
+  margin: 0 auto;
+}
+.center {
+  text-align: center;
+}
+.half {
+  width: 30%;
+}
+
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.bold {
+  font-weight: bold;
+}
+
+.quarter {
+  width: 14%;
+}
+.navigation { 
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal; 
+  position: fixed !important;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  color: #fff;
+  line-height: 2em;     
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d0289b+0,3410ae+100 */
+  background: #d0289b; /* Old browsers */
+  background: -moz-linear-gradient(left, #d0289b 0%, #3410ae 60%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #d0289b 0%,#3410ae 60%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #d0289b 0%,#3410ae 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0289b', endColorstr='#3410ae',GradientType=1 ); /* IE6-9 */ 
+}
+
+.navigation li {  
+  position: relative;
+  top: 5px; 
+  cursor: pointer;
+}
+
+.footer-list a {
+  text-decoration: none;
+  color: white;
+}
+
+.half2 {
+  width: 49%;
+}
+
+.navigation li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1em;
 }

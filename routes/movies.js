@@ -20,6 +20,22 @@ const { check } = require('express-validator/check');
  * @property {string} source  FB,Custom,TMDB,OMDB
  */
 
+  /**
+ * 
+ * @typedef MovieLeader
+ * @property {string} _id
+ * @property {string} name
+ * @property {Array.<string>} genre
+ * @property {string} cover 
+ * @property {string} release_date Unix timestamp
+ * @property {string} id Format is <source>-Id of resource in source
+ * @property {string} directed_by
+ *  @property {any} social_data 
+ * @property {string} description
+ * @property {string} source  FB,Custom,TMDB,OMDB
+ * @property {number} usersLiked  Number of users that liked this movie in DB
+ */
+
 
  /**
  * 
@@ -42,6 +58,14 @@ const { check } = require('express-validator/check');
  */
 
 
+/**
+ * 
+ * @typedef GenreCount 
+ * @property {string} name   Genre name
+ * @property {number} count   Genre count
+ */
+
+
  /**
  * 
  * @typedef Count
@@ -57,6 +81,44 @@ const { check } = require('express-validator/check');
 
 // Import contact controller
 var MovieController = require('../controllers/MovieController');
+
+
+router.route('/genres/refresh')
+  .get( MovieController.getTMDBGenres);
+
+/**
+ * This route will return all genres and number of movies in that genre
+ * @route GET /movies/genres
+ * @group Movies
+ * @returns {Array.<GenreCount>} 200 - Genre count objects
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/genres')
+  .get( MovieController.getGenreCount);
+
+
+
+/**
+ * This route will return movies by genre
+ * @route GET /movies/genres/{genre}
+ * @param {string} genre.param.required - Genre name
+ * @group Movies
+ * @returns {Array.<Movie>} 200 - Movies objects
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/genres/:genre')
+  .get( MovieController.getGenre);
+
 
  /**
  * This route will add movie from tmdb to db
@@ -124,6 +186,40 @@ router.route('/omdb/:movie_id')
  */
 router.route('/count')
 .get( MovieController.count);
+
+
+
+/**
+ * This returns top 10 movies in Movie monster DB
+ * @route GET /movies/db/top
+ * @group Movies
+ * @returns {Array.<MovieLeader>} 200 - Movies with count - number of users that liked it
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/db/top')
+.get( MovieController.dbLeader);
+
+
+
+/**
+ * This returns top 10 movies in TMDB for today
+ * @route GET /movies/tmdb/top
+ * @group Movies
+ * @returns {Array.<Movie>} 200 - Top movies
+ * @returns {Error.model}  500 - Server error
+ * @returns {Error.model}  401 - Invalid token
+ * @returns {Error.model}  404 - No data found
+ * @produces application/json
+ * @consumes application/json
+ * @security JWT
+ */
+router.route('/tmdb/top')
+.get( MovieController.tmdbLeader);
 
 
 /**
@@ -229,6 +325,9 @@ router.route('/:movie_id')
   .get( MovieController.getById)
   .put( MovieController.update)
   .delete( MovieController.delete );
+
+
+
 
 
 /**

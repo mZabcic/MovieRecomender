@@ -12,7 +12,7 @@ var jwt = require('express-jwt');
 var cron = require('node-cron');
 var timeout = require('connect-timeout'); //express v4
 var cors = require('cors');
-
+var Genre = require('./models/Genre');
 const Weather = require('./models/Weather');
 
 
@@ -42,7 +42,7 @@ const expressSwagger = require('express-swagger-generator')(app);
 let options = {
     swaggerDefinition: {
         info: {
-            description: 'This is a sample server',
+            description: 'Movie recomender api',
             title: 'Swagger',
             version: '1.0.0',
         },
@@ -121,6 +121,7 @@ cron.schedule('0 1 * * *', () => {
     const logger = log4js.getLogger('data');
     updateTMDB();
     updateOMDB();
+    updateGenres();
     logger.info("Social data updated");
   }, {
     scheduled: true,
@@ -201,6 +202,24 @@ const updateWeather = () => {
     })
 }
 
+
+
+const updateGenres = () => {
+    sget.concat({
+        url: config.moviedb_url + 'genre/movie/list' + config.moviedb_apikey,
+        method: 'GET',
+        json: true
+    }, function (err, response, data) {
+      var allGenres = [];
+      data.genres.forEach(e => {
+        var g = new Genre(e);
+        allGenres.push(g);
+      })
+      Genre.collection.insert(allGenres, function (err, docs) {
+        console.log(docs)
+      });
+    });
+}
 
 module.exports = app;
 

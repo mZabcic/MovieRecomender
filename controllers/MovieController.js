@@ -1,6 +1,7 @@
 
 Movie = require('../models/Movie');
 User = require('../models/User');
+Genre = require('../models/Genre');
 var config = require('../config');
 const sget = require('simple-get')
 
@@ -247,17 +248,28 @@ exports.search = function (req, res)  {
 
 const tmdbSearch = (term, returnObject, page, res, page_omdb, u) => {
   sget.concat({
-    url: config.moviedb_url + 'search/movie' + config.moviedb_apikey + '&query=' + term + '&page' + page,
+    url: config.moviedb_url + 'search/movie' + config.moviedb_apikey + '&query=' + term + '&page=' + page,
     method: 'GET',
     json: true
 }, function (err, response, data) {
+  Genre.find({}, (err, ge) => {
+ 
     data.results.forEach((e) => {
+      var mg = [];
+    if (e.genre_ids != undefined)
+    e.genre_ids.forEach((g) => {
+      var obj = ge.find(obj => obj.id == g);
+      if (obj != undefined)
+      mg.push(obj.name);
+    })
+    e.genre = mg;
       e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path;
       var newId = "tmdb-" + e.id;
       e.userLiked = checkIfUserLikedMovie(u, newId) ? 1 : 0;
     })
     returnObject.tmdb = data;
     omdbSearch(term, returnObject, page_omdb, res, u);
+  });
 });
 }
 
@@ -300,7 +312,11 @@ exports.addTMDBMovie = (req, res) => {
         method: 'GET',
         json: true
     }, function (err, response, data) {
+      if (data.id == "tmdb-undefined") {
+        return res.status(400).json({error : "Movie doesnt exist"});
+      }
       var g = [];
+      if (data.genres != undefined)
          data.genres.forEach(e => {
             g.push(e.name);
          });
@@ -541,5 +557,175 @@ const checkIfUserLikedMovie = (u, id) => {
  
   var check = u.movies.filter(el => el.id === id);
   return check.length == 0 ? false : true;
+}
+
+
+
+
+exports.getGenre = function (req, res) {
+  var genre_name = req.params.genre.toLowerCase();
+  genre_name =  genre_name.charAt(0).toUpperCase() +  genre_name.slice(1);
+ 
+  Movie.find({genre : genre_name}, function(err, doc) {
+    if (err) {
+      res.status(500).json(err);
+      return;
+    }
+    if (!doc) {
+      res.status(404).json({error : "No data found"});
+      return;
+    }
+    res.json(doc);
+  }); 
+};
+
+
+exports.getGenreCount = function (req, res) {
+ 
+  Movie.find({}, function(err, doc) {
+    if (err) {
+      res.status(500).json(err);
+      return;
+    }
+    if (!doc) {
+      res.status(404).json({error : "No data found"});
+      return;
+    }
+    var genres = {};
+  doc.forEach((e) => {
+    e.genre.forEach((g) => {
+      if(typeof(genres[g]) === "undefined"){
+        genres[g] = 1;
+    }else{
+      genres[g] = genres[g] + 1;
+    }
+    })
+  })
+  var genreArray = [];
+  for (var property in genres) {
+    if (genres.hasOwnProperty(property)) {
+      genreArray.push({name : property, count : genres[property]});
+    }
+  }
+
+  var compare = (a,b) => {
+    if (a.count < b.count)
+      return 1;
+    if (a.count > b.count)
+      return -1;
+    return 0;
+  }
+
+  genreArray.sort(compare);
+  res.json(genreArray);
+  }); 
+};
+
+exports.dbLeader = (req, res) => {
+  var allMovies = [];
+  var allMoviesIds = [];
+  User.find().populate(['movies'])
+  .exec(function (err, movie) {
+    movie.forEach((e) => {
+      e.movies.forEach((m) => {
+         allMoviesIds.push(m._id);
+         if (allMovies.indexOf(m) < 0) {
+           allMovies.push(m);
+         }
+      })
+    })
+  var leader = makeMoviesLeader(allMoviesIds);
+  leader = leader.slice(0, 10);
+  var returnObject = [];
+  leader.forEach((e) => {
+    var obj = allMovies.find(obj => obj._id == e.name);
+    obj.usersLiked = e.count;
+    returnObject.push(obj);
+
+  })
+  res.json(returnObject);
+  })
+}
+
+const makeMoviesLeader = (m) => {
+  var movies = {};
+  m.forEach((e) => {
+      if(typeof(movies[e]) === "undefined"){
+        movies[e] = 1;
+    }else{
+      movies[e] = movies[e] + 1;
+    }
+  })
+  var moviesArray = [];
+  for (var property in movies) {
+    if (movies.hasOwnProperty(property)) {
+      moviesArray.push({name : property, count : movies[property]});
+    }
+  }
+
+  var compare = (a,b) => {
+    if (a.count < b.count)
+      return 1;
+    if (a.count > b.count)
+      return -1;
+    return 0;
+  }
+
+  moviesArray.sort(compare);
+
+  return moviesArray;
+}
+
+
+exports.tmdbLeader = function (req, res) {
+  User.findOne({_id: req.user._id}).populate(['movies'])
+  .exec(function (err, u) {
+  sget.concat({
+    url: config.moviedb_url + 'movie/popular' + config.moviedb_apikey + '&page=1',
+    method: 'GET',
+    json: true
+}, function (err, response, data) {
+  Genre.find({}, (err, ge) => {
+
+  var returnObject = [];
+  data.results.forEach((e) => {
+    var mg = [];
+    if (e.genre_ids != undefined)
+    e.genre_ids.forEach((g) => {
+      var obj = ge.find(obj => obj.id == g);
+      if (obj != undefined)
+      mg.push(obj.name);
+    })
+    e.genre = mg;
+    e.poster_path = 'https://image.tmdb.org/t/p/w500' + e.poster_path;
+    var newId = "tmdb-" + e.id;
+    e.userLiked = checkIfUserLikedMovie(u, newId) ? 1 : 0;
+    var date = new Date(e.release_date);
+    var month = date.getMonth() + 1;
+    e.release_date = month + '/' + date.getDate() + '/' + date.getFullYear();
+    returnObject.push(e);
+  })
+  res.json(returnObject);
+})
+})
+})
+}
+
+
+exports.getTMDBGenres = (req, res) => {
+  sget.concat({
+    url: config.moviedb_url + 'genre/movie/list' + config.moviedb_apikey,
+    method: 'GET',
+    json: true
+}, function (err, response, data) {
+  var allGenres = [];
+  data.genres.forEach(e => {
+    var g = new Genre(e);
+    allGenres.push(g);
+  })
+  Genre.collection.insert(allGenres, function (err, docs) {
+    res.json(docs);
+  });
+});
 }
 

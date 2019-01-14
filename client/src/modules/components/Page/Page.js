@@ -30,53 +30,32 @@ export default class Page extends PureComponent {
   render() {
     const { children, loggedIn, onLogoutClick, user, title } = this.props;
     return (
-      <div className="limiter">
+      <div className="app">
         <Helmet>
           <title>{title}</title>
         </Helmet>
         {loggedIn &&
-          <header >
-            <div>
-              <a href="/">Home</a>
-              <a href="/my-movies">My Movies</a>
-              <a href="/top-movies">Top Movies</a>
-              <a href="/about">About</a>
-              <a href="/contact">Contact</a>
-            </div>
-            <form onSubmit={this.handleSearchSubmit}>
-              <input type="text" onChange={this.handleSearchChange} />
-              <input type="submit" value="Search" />
-            </form>
-            <div>
-              <a href="/profile">Profile</a>
-              <button onClick={onLogoutClick}>Log Out</button>
-            </div>
+          <header > 
+          <div class="navigation holder" >
+            <ul class="text-font">
+              <li class="half left"><a href="/"><b>M</b>ovie<b>M</b>onster</a></li>
+              <li class="quarter right"><a href="/my-movies">My movies</a></li>
+              <li class="quarter right"><a href="/top-movies">Top movies</a></li>            
+              <li class="quarter right"><a href="/about">About</a></li>
+              <li class="quarter right"><a href="/contact">Contact</a></li>
+              <li class="quarter right"><a href="/profile">Profile</a></li>
+            </ul> 
+          </div>
           </header>
-        }
-        <div className="container">
-          {children}
-        </div>
+        } 
+          {children} 
         {loggedIn &&
           <footer>
-            <div>
-              <a href="/">Home</a>
-              <a href="/my-movies">My Movies</a>
-              <a href="/top-movies">Top Movies</a>
-              <a href="/about">About</a>
-              <a href="/contact">Contact</a>
-              <a href="/profile">Profile</a>
-            </div>
-            <div>
-              <p>FER</p>
-              <p>Unska 3</p>
-              <p>10000, Zagreb</p>
-            </div>
-            <div>
-              <a href="http://165.227.128.66/api-docs#/">API documentation</a>
-              <a href="/">Project Documentation</a>
-              <p>Movie Monster</p>
-              <p>2018/2019</p>
-            </div>
+          <div className="footer holder">
+            <ul className="footer-list">
+              <li className="half2 center">2019&copy; <b>M</b>ovie<b>M</b>onster</li><li class="half2 center"><a href="http://165.227.128.66/api-docs#/">API documentation</a></li>
+            </ul>
+          </div> 
           </footer>}
       </div>
     );
