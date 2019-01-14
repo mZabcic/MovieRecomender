@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Page } from "modules/components";
 import { logoutUser, getUser } from "modules/redux";
+import { handleResponse, requestOptions } from "../../services/networking";
+import config from 'config/default.json';
 
 class About extends PureComponent {
   constructor(props) {
     super(props);
-
+    this.state = {
+      data: []
+    }
+    this.requestCount = this.requestCount.bind(this);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
 
   }
@@ -17,15 +22,40 @@ class About extends PureComponent {
     logoutUserAction();
   }
 
+  componentDidMount() {
+    this.requestCount();
+  }
+
+  requestCount() {
+    fetch(`${config.apiUrl}/movies/count`, requestOptions)
+      .then(handleResponse)
+      .then(movies => {
+        this.setState({
+          data: movies
+        })
+      });
+  }
+
   render() {
     const { user } = this.props;
+    let data = this.state.data;
+    console.log(data);
     return (
       <Page
         title="MovieMonster - About"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
-        user={user}>
+        user={user}
+        data={data}>
         <div className="profilesWrapper">
+          <div className="profileBox">
+            <p className="title">Statistics</p>
+            <hr/>
+            <p>In our database we have total of <strong>{data.total}</strong> movies.</p>
+            <p>From The Internet Movie Database: <strong>{data.tmdb}</strong></p>
+            <p>From The Open Movie Database: <strong>{data.omdb}</strong></p>
+            <p>From Facebook: <strong>{data.fb}</strong></p>
+          </div>
           <div className="profileBox">
             <p className="title">Ivan Ivkošić</p>
             <hr/>
