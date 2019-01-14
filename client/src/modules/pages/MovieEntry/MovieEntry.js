@@ -115,7 +115,7 @@ class MovieEntry extends PureComponent {
           <div className="movieFlex">
             <div><img src={movie.Poster} /></div>
             <div>
-              
+            
               <p><b>Released:</b> {movie.Year}</p>
             
               
@@ -136,7 +136,7 @@ class MovieEntry extends PureComponent {
             <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
             <div>
               <p>{movie.description ? movie.description : movie.overview}</p>
-              
+              <p><b>Genres:</b> {movie.genre.join(", ")}</p>
               <p><b>Released:</b> {home ? movie.released : movie.release_date}</p>
               {movie.social_data == undefined &&
               <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?

@@ -42,14 +42,24 @@ class HomeMovies extends React.Component {
         });
     }
 
+    handleFavourite(e) {
+        console.log("tu");
+    }
+
 
     render() {
         return (
             <div className="moviesHomeSection">
             <p className="moviesTitle2">Popular movies according to <b>trakt.tv</b></p>
+                
                 {this.state.movies.length > 0 ? this.state.movies.map((movieEntry, index) =>
-                    <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
-                    poster={this.state.poster[index]} index={index} home={true} />) : "Nema rezultata"}
+                
+                    <MovieEntry  movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
+                    poster={this.state.poster[index]} index={index} home={true} />) : "Nema rezultata"
+                   
+                    
+                }
+                
 			</div>
         );
     }
