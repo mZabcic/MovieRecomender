@@ -34,7 +34,8 @@ class HomeMovies extends React.Component {
                     console.log({myJson})
 					this.setState(prevState => ({
 						poster: [...prevState.poster, myJson.Poster]
-					}))
+                    }))
+                    data.poster = myJson.Poster;
 				}.bind(this));
         });
         this.setState({

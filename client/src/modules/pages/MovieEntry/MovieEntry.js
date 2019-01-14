@@ -39,8 +39,56 @@ class MovieEntry extends PureComponent {
     let movie = this.props.movie;
     // ADD TO FAVOURITE
     if (!this.state.favourite) {
+      if (movie.ids.trakt != undefined) {
+        let user = JSON.parse(localStorage.getItem('user'));
+var token = ""
+  if (user && user.token) {
+    token = 'Bearer ' + user.token ;
+  } 
+        
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization' : token },
+          body: JSON.stringify({name : movie.title, genre: movie.genres.join(","),
+          cover: movie.cover,
+          release_date: movie.released,
+          link: movie.homepage,
+          description: movie.overview,
+          cover : this.props.poster
+          })
+        };
+        fetch(`${config.apiUrl}/movies/`, requestOptions)
+        .then(handleResponse => {
+          if (handleResponse.ok) {
+            this.setState({
+              favourite: !this.state.favourite
+            })
+          }
+          console.log("handleResp: ", handleResponse);
+        })
+        .then(movie => { });
+        return;
+      }
+    
       if ((movie.source ? movie.source : this.props.source) == "DB") {
-        fetch(`${config.apiUrl}/movie/` + movie.id + `/users/` + this.props.user._id, requestOptionsPost)
+        var bod = JSON.stringify({name : movie.title, genre: movie.genres.join(","),
+        cover: movie.cover,
+        release_date: movie.released,
+        link: movie.homepage,
+        description: movie.overview
+        });
+        console.log(bod);
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({name : movie.title, genre: movie.genres.join(","),
+          cover: movie.cover,
+          release_date: movie.released,
+          link: movie.homepage,
+          description: movie.overview
+          })
+        };
+        fetch(`${config.apiUrl}/movie/` + movie.id + `/users/` + this.props.user._id, requestOptions)
         .then(handleResponse => {
           if (handleResponse.ok) {
             this.setState({
@@ -128,15 +176,17 @@ class MovieEntry extends PureComponent {
     return (
       <div>
         <div className="movieBox">
-        {!home &&
+        
         <span onClick={this.handleFavourite} className={this.state.favourite ? "glyphicon glyphicon-star" : "glyphicon glyphicon-star-empty"}></span>
-          }<p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
+          <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
             <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
             <div>
               <p>{movie.description ? movie.description : movie.overview}</p>
+              {movie.genre &&
               <p><b>Genres:</b> {movie.genre.join(", ")}</p>
+              }
               <p><b>Released:</b> {home ? movie.released : movie.release_date}</p>
               {movie.social_data == undefined &&
               <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
