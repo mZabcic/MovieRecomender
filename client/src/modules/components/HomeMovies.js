@@ -48,7 +48,7 @@ class HomeMovies extends React.Component {
             <div className="moviesHomeSection">
                 {this.state.movies.length > 0 ? this.state.movies.map((movieEntry, index) =>
                     <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
-                    poster={this.state.poster[index]} index={index} />) : "Nema rezultata"}
+                    poster={this.state.poster[index]} index={index} home={true} />) : "Nema rezultata"}
 			</div>
         );
     }
