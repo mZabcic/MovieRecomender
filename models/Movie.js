@@ -42,6 +42,10 @@ var movieSchema = mongoose.Schema({
       userLiked : {
         type: Number,
         required: false
+      },
+      link : {
+        type: String,
+        required: false
       }
 });
 movieSchema.plugin(beautifyUnique);

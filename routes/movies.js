@@ -18,6 +18,7 @@ const { check } = require('express-validator/check');
  *  @property {any} social_data 
  * @property {string} description
  * @property {string} source  FB,Custom,TMDB,OMDB
+ * @property {string} link  
  */
 
   /**
@@ -34,6 +35,7 @@ const { check } = require('express-validator/check');
  * @property {string} description
  * @property {string} source  FB,Custom,TMDB,OMDB
  * @property {number} usersLiked  Number of users that liked this movie in DB
+  * @property {string} link  
  */
 
 
