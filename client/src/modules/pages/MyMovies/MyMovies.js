@@ -47,7 +47,7 @@ class MyMovies extends PureComponent {
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
-        <div>
+        <div className="moviesHomeSection">
         {movies ? (movies.length > 0 && movies.map((movieEntry, index) =>
             <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : "Nema rezultata"}
         </div>

@@ -62,9 +62,11 @@ class TopMovies extends PureComponent {
         user={user}>
         <div>
           {tmdbMovies ? (tmdbMovies.length > 0 && tmdbMovies.map((movieEntry, index) =>
-            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : "Nema rezultata"}
+            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
+              type="tmdb" />)) : "Nema rezultata"}
           {dbMovies ? (dbMovies.length > 0 && dbMovies.map((movieEntry, index) =>
-            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : "Nema rezultata"}
+            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}
+              type="db" />)) : "Nema rezultata"}
         </div>
       </Page>
     );

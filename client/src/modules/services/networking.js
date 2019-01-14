@@ -6,6 +6,22 @@ export const requestOptions = {
   },
 };
 
+export const requestOptionsPost = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    "Authorization": authHeader()
+  },
+};
+
+export const requestOptionsDelete = {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    "Authorization": authHeader()
+  },
+};
+
 export function authHeader() {
   let user = JSON.parse(localStorage.getItem('user'));
 
