@@ -49,9 +49,9 @@ export default class Page extends PureComponent {
                   <li class="quarter right"><a href="/my-movies">My movies</a></li>
                   <li class="quarter right"><a href="/top-movies">Top movies</a></li>
                   <li class="quarter right"><a href="/recommended">Recommended</a></li>
-                  <li class="quarter right"><a href="/about">About</a></li>
-                  <li class="quarter right"><a href="/contact">Contact</a></li>
-                  <li class="quarter right"><a href="/profile">Profile</a></li>
+                  <li class="quarter2 right"><a href="/about">About</a></li>
+                  <li class="quarter2 right"><a href="/contact">Contact</a></li>
+                  <li class="quarter2 right"><a href="/profile">Profile</a></li>
                   <li class="quarter right"><a href="/profile"><button class="btn btn-light" onClick={onLogoutClick}>Log Out</button></a></li>
                 </ul>
               </div>
