@@ -66,7 +66,7 @@ class MovieEntry extends PureComponent {
         console.log("aaaaaaaaaaaaa");
       }
       else{
-        fetch(`${config.apiUrl}/movies/tmdb/` + movie.id, requestOptionsPost)
+        fetch(`${config.apiUrl}/movies/tmdb/` + movie._id, requestOptionsPost)
           .then(handleResponse => {
             if (handleResponse.ok) {
               this.setState({
@@ -79,7 +79,7 @@ class MovieEntry extends PureComponent {
     }
     // DELETE
     else {
-      fetch(`${config.apiUrl}/movie/` + movie.id + `/users/` + this.props.user.id, requestOptionsDelete)
+      fetch(`${config.apiUrl}/movies/` + movie.id + `/users/` + this.props.user._id, requestOptionsDelete)
         .then(handleResponse => {
           if (handleResponse.ok) {
             this.setState({
