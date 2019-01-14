@@ -27,6 +27,7 @@ class MyMovies extends PureComponent {
     fetch(`${config.apiUrl}/movies`, requestOptions)
       .then(handleResponse)
       .then(movies => {
+        console.log({movies})
         this.setState({
           movies: movies
         })
