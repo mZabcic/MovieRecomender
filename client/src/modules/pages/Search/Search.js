@@ -48,17 +48,21 @@ class Search extends PureComponent {
         title={`MovieMonster - Search`}
         onLogoutClick={this.handleLogoutClick}
         loggedIn>
-        <div>
-          <label>OMBD search results:</label>
-          {omdb ? (omdb.Search.length > 0 && omdb.Search.map((movieEntry, index) =>
-            <MovieEntry movie={movieEntry} key={"movieEntryOmdb" + index.toString()} />)) : ""}
-          {omdb ? omdb.Search.length === 0 && <label>No movies found on OMDB</label> : ""}
-        </div>
-        <div>
-          <label>The Movie DB search results:</label>
-          {tmdb ? (tmdb.results.length > 0 && tmdb.results.map((movieEntry, index) =>
-            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : ""}
-          {tmdb ? tmdb.results.length === 0 && <label>No movies found on The Movie DB</label> : ""}
+        <div className="moviesHomeSection myMoviesSection">
+          <div>
+            <label>The Movie DB search results:</label>
+            {tmdb ? (tmdb.results.length > 0 && tmdb.results.map((movieEntry, index) =>
+              <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : ""}
+            {tmdb ? tmdb.results.length === 0 && <label>No movies found on The Movie DB</label> : ""}
+          </div>
+          <div>
+            <label>OMBD search results:</label>
+            {omdb ? (omdb.Search.length > 0 && omdb.Search.map((movieEntry, index) =>
+              <MovieEntry movie={movieEntry} key={"movieEntryOmdb" + index.toString()}
+                source="OMDB" />)) : ""}
+            {omdb ? omdb.Search.length === 0 && <label>No movies found on OMDB</label> : ""}
+          </div>
+
         </div>
       </Page>
     );
