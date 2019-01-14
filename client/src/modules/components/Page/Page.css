@@ -127,8 +127,7 @@ body {
   padding: 10px;
   margin: 0 auto;
   margin-bottom: 15px;
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: 20px; 
   width: 98%;
 }
 
@@ -190,9 +189,11 @@ body {
   text-align: center;
 }
 .half {
-  width: 30%;
+  width: 25%;
 }
-
+.space-right {
+  padding-right: 10px;
+}
 .left {
   text-align: left;
 }
@@ -202,9 +203,12 @@ body {
 .bold {
   font-weight: bold;
 }
-
+ 
 .quarter {
-  width: 14%;
+  width: 10%;
+}
+.middle {
+  width: 15%;
 }
 .navigation { 
   font-family: 'Montserrat', sans-serif;
@@ -221,6 +225,14 @@ body {
   background: -webkit-linear-gradient(left, #d0289b 0%,#3410ae 60%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to right, #d0289b 0%,#3410ae 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0289b', endColorstr='#3410ae',GradientType=1 ); /* IE6-9 */ 
+  padding-left: 10% !important;
+  padding-right: 10% !important;
+}
+
+.navigation .form-control {
+  display: inline;
+  width: 70%;
+  margin-right: 5px;
 }
 
 .navigation li {  
@@ -242,4 +254,28 @@ body {
   text-decoration: none;
   color: white;
   font-size: 1.1em;
+}
+
+.movieTitle {
+  cursor: pointer;
+}
+
+
+
+
+.form-area {
+  background-color: #FAFAFA;
+  padding: 25px 20px;
+  margin: 0 auto;
+  max-width: 500px;
+}
+.contact-container {
+  padding: 0 10px;
+  margin-top: 50px;
+  text-align: center;
+}
+@media all and (min-width: 360px) { 
+  .form-area { 
+    padding: 25px 40px; 
+    }
 }
