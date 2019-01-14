@@ -40,9 +40,10 @@ class HomeMovies extends React.Component {
 
  				console.log(poster); 
 		      	table.push(
-		      	<a href={this.state.movies[i].homepage}>
+		      	
 		      	<div className="movieBox">
-		      	<p><b>{this.state.movies[i].title}</b></p>  
+		      	<span className="glyphicon glyphicon-star-empty"></span> 
+		      	<p className="movieTitle"><b><a href={this.state.movies[i].homepage}>{this.state.movies[i].title}</a></b></p>  
 		      	<hr/>
 		      	<div className="movieFlex">
 		      		<div><img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"/></div> 
@@ -53,7 +54,7 @@ class HomeMovies extends React.Component {
 		      		</div>
 		      	</div>
 		      	</div>
-		      	</a>);
+		      	);
 		    }
 		} 
 	    return table;
