@@ -82,7 +82,7 @@ class MovieEntry extends PureComponent {
   }
 
   render() {
-    const { movie, user, index, poster } = this.props;
+    const { movie, user, index, poster, home } = this.props;
     return (
       <div>
         <div className="movieBox">
@@ -93,9 +93,9 @@ class MovieEntry extends PureComponent {
             <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
             <div>
               <p>{movie.description ? movie.description : movie.overview}</p>
-              <p><b>Released:</b> {movie.release_date}</p>
-              <p><b>Rating:</b> {movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
-                movie.social_data.tmdb_vote_average : "unknown"))}</p>
+              <p><b>Released:</b> {home ? movie.released : movie.release_date}</p>
+              <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
+                movie.social_data.tmdb_vote_average : "unknown")))}</p>
               <button onClick={this.handleFavourite}>KLIKNI</button>
             </div>
           </div>
