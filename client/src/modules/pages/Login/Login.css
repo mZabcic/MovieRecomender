@@ -57,6 +57,13 @@ a:hover {
   background: #fff;
   border-radius: 10px;
   position: relative;
+  position: absolute;
+    left: 0;
+    right: 0;
+    /* top: 0; */
+    /* bottom: 0; */
+    margin: auto;
+    top: 20%;
 }
 
 
