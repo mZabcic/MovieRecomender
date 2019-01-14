@@ -44,7 +44,6 @@ class Weather extends React.Component {
 	}
 	
 	render() {
-		this.getWeather()
 		return (
 			<div className="weatherSection ">
 			<img alt="none" className="weatherImg" src={window.location.origin + '/img/foreca.png'}></img>
