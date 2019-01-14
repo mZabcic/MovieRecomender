@@ -82,14 +82,18 @@ class MovieEntry extends PureComponent {
   }
 
   render() {
-    const { movie, user, index } = this.props;
+    const { movie, user, index, poster } = this.props;
     return (
       <div>
         <div className="movieBox">
+<<<<<<< HEAD
+        <span className="glyphicon glyphicon-star-empty"></span>
+=======
+>>>>>>> master
           <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
-            <div><a onclick={this.handleFavourite}><img src={movie.cover ? movie.cover : movie.poster_path} /></a></div>
+            <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
             <div>
               <p>{movie.description ? movie.description : movie.overview}</p>
               <p><b>Released:</b> {movie.release_date}</p>
