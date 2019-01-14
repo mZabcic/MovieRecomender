@@ -24,6 +24,8 @@ const returnMovie = function(req, res) {
 
 
 exports.get = function (req, res) {
+  User.findOne({_id: req.user._id}).populate(['movies'])
+    .exec(function (err, u) {
   Movie.find({}, function(err, doc) {
     if (err) {
       res.status(500).json(err);
@@ -33,8 +35,12 @@ exports.get = function (req, res) {
       res.status(404).json({error : "No data found"});
       return;
     }
+    doc.forEach((e) => {
+      e.userLiked = checkIfUserLikedMovie(u, e.id) ? 1 : 0;
+    })
     res.json(doc);
   }); 
+}); 
 };
 
 exports.getById = function (req, res) {
@@ -238,6 +244,9 @@ exports.search = function (req, res)  {
   .find({ "name": { "$regex":  term , "$options": "i" }})
   .sort({'name': 1})
   .exec(function(err, docs) {
+    docs.forEach((e) => {
+      e.userLiked = checkIfUserLikedMovie(u, e.id) ? 1 : 0;
+    })
       returnObject.db = docs;
       tmdbSearch(term, returnObject, page_tmdb, res, page_omdb, u);
   });
