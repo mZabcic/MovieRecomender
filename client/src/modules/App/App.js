@@ -21,6 +21,7 @@ export default class App extends PureComponent {
           <PrivateRoute path="/contact" component={Contact} />
           <PrivateRoute path="/top-movies" component={TopMovies} />
           <PrivateRoute path="/my-movies" component={MyMovies} />
+          <PrivateRoute path="/search" component={Search} />
           <Route path="/login" component={Login} />
           <PrivateRoute path="/" component={Home} />
         </Switch>
