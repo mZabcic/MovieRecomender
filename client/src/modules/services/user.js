@@ -18,8 +18,6 @@ function fetchUser() {
   return fetch(`${config.apiUrl}/users/me`, requestOptions)
     .then(handleResponse)
     .then(user => {
-      console.log({ user });
-
       return user;
     });
 }
