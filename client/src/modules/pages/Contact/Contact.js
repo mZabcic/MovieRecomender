@@ -33,6 +33,7 @@ class Contact extends PureComponent {
           <div className="form-area">  
             <form role="form"> 
                         <h3>KONTAKTIRAJTE NAS</h3>
+                        <hr/>
                         <div className="form-group">
                             <input type="text" className="form-control" id="name" name="name" placeholder="Ime i prezime" required/>
                         </div>

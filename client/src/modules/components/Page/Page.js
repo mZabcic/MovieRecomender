@@ -30,6 +30,7 @@ export default class Page extends PureComponent {
   render() {
     const { children, loggedIn, onLogoutClick, user, title } = this.props;
     return (
+      <div>
       <div className="app">
         <Helmet>
           <title>{title}</title>
@@ -56,12 +57,15 @@ export default class Page extends PureComponent {
           </header>
         } 
           {children} 
-        {loggedIn &&
+        
+      </div>
+      {loggedIn &&
           <footer>
           <div className="footer holder">
             <ul className="footer-list">
-              <li className="half2 center">2019&copy; <b>M</b>ovie<b>M</b>onster</li><li class="half2 center"><a href="http://165.227.128.66/api-docs#/">API documentation</a></li>
-            </ul>
+              <li className="half3 center">2019&copy; <b>M</b>ovie<b>M</b>onster</li><li class="half3 center"><a href="http://165.227.128.66/api-docs#/">API documentation</a></li>
+              <li class="half3 center"><a href="www.fer.unizg.hr">FER, </a>Unska 3, 10000, Zagreb</li>
+            </ul> 
           </div> 
           </footer>}
       </div>
