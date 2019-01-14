@@ -208,7 +208,10 @@ body {
 }
  
 .quarter {
-  width: 10%;
+  width: 9%;
+}
+.quarter2 {
+  width: 7%;
 }
 .middle {
   width: 15%;
