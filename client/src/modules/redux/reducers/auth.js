@@ -10,7 +10,7 @@ function userReducer(state = {}, action) {
     case USER_LOGOUT:
       return {};
     case FETCH_USER_SUCCESS:
-      return { ...state, ...action.payload.user };
+      return { ...state, ...action.payload };
     default:
       return state;
   }
