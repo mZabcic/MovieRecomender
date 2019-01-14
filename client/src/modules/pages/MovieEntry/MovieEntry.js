@@ -98,7 +98,6 @@ class MovieEntry extends PureComponent {
       return (
         <div>
         <div className="movieBox">
-        <span className="glyphicon glyphicon-star-empty"></span>
           <p className="movieTitle"><b>{movie.Title}</b></p>
           <hr />
           <div className="movieFlex">
@@ -106,7 +105,6 @@ class MovieEntry extends PureComponent {
             <div>
               <p><b>Released:</b> {movie.Year}</p>
               <p><b>Rating:</b> "unknown"</p>
-              <button onClick={this.handleFavourite}>KLIKNI</button>
             </div>
           </div>
         </div>
@@ -116,8 +114,9 @@ class MovieEntry extends PureComponent {
     return (
       <div>
         <div className="movieBox">
+        {!home &&
         <span onClick={this.handleFavourite} className={this.state.favourite ? "glyphicon glyphicon-star" : "glyphicon glyphicon-star-empty"}></span>
-          <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
+          }<p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
             <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
