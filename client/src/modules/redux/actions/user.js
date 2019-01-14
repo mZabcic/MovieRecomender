@@ -21,6 +21,6 @@ export function fetchUser() {
 
 
   function request() { return { type: FETCH_USER_REQUEST } }
-  function success(user) { return { type: FETCH_USER_SUCCESS, payload: user.user } }
+  function success(user) { return { type: FETCH_USER_SUCCESS, payload: user} }
   function error(error) { return { type: FETCH_USER_ERROR, error } }
 }
