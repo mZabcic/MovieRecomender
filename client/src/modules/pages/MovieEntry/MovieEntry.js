@@ -86,7 +86,7 @@ class MovieEntry extends PureComponent {
     return (
       <div>
         <div className="movieBox">
-          <p><b>{movie.name ? movie.name : movie.title}</b></p>
+          <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
             <div><a onclick={this.handleFavourite}><img src={movie.cover ? movie.cover : movie.poster_path} /></a></div>

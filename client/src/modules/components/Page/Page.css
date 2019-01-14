@@ -243,6 +243,9 @@ body {
   cursor: pointer;
 }
 
+.navigation li a:hover {
+  color: #aaa;
+}
 .footer-list a {
   text-decoration: none;
   color: white;
@@ -260,6 +263,7 @@ body {
 
 .movieTitle {
   cursor: pointer;
+  text-align: center;
 }
 
 
@@ -313,4 +317,12 @@ body {
   color: black;
   font-size: 1.2em;
   transition: all .3s;
+}
+
+.artistsTitle {
+  font-size: 1.2em;
+}
+.myMoviesSection {
+  display: table;
+  margin: 50px auto;
 }
