@@ -22,7 +22,6 @@ export default class Page extends PureComponent {
 
   handleSearchSubmit() {
     const { search } = this.state;
-    console.log(search);
     history.push(`/search?query=${search}`);
   }
 
