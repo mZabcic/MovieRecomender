@@ -71,7 +71,7 @@
   border-radius: 15px;
 }
 
-.greySection hr, .weatherSection hr, .moviesHomeSection hr { 
+.greySection hr, .weatherSection hr, .moviesHomeSection hr, .profileBox hr, .contact-container hr { 
   border: 2px solid #80b3ff;
   border-radius: 3px;
   width: 60%;
@@ -97,7 +97,7 @@
 }
 
 .app {
-  background: url("/img/bg-01.jpg");
+  background: url("/img/bg-01.jpg") no-repeat top center fixed;;
   background-size: cover;
   padding: 15px;
   padding-bottom: 0;
@@ -129,6 +129,7 @@ body {
   margin-bottom: 15px;
   border-radius: 20px; 
   width: 98%;
+  position: relative;
 }
 
 .movieBox p {
@@ -162,8 +163,7 @@ body {
   background: linear-gradient(to right, #440753 0%,#1b1051 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#440753', endColorstr='#1b1051',GradientType=1 ); /* IE6-9 */
   font-size: 15px;
-  padding: 3px;
-  position: fixed !important;
+  padding: 3px; 
   bottom: 0;
   left: 0;
 }
@@ -191,6 +191,9 @@ body {
 .half {
   width: 25%;
 }
+.half3 {
+  width: 30%;
+}
 .space-right {
   padding-right: 10px;
 }
@@ -205,7 +208,10 @@ body {
 }
  
 .quarter {
-  width: 10%;
+  width: 9%;
+}
+.quarter2 {
+  width: 7%;
 }
 .middle {
   width: 15%;
@@ -241,6 +247,9 @@ body {
   cursor: pointer;
 }
 
+.navigation li a:hover {
+  color: #aaa;
+}
 .footer-list a {
   text-decoration: none;
   color: white;
@@ -258,6 +267,7 @@ body {
 
 .movieTitle {
   cursor: pointer;
+  text-align: center;
 }
 
 
@@ -268,6 +278,7 @@ body {
   padding: 25px 20px;
   margin: 0 auto;
   max-width: 500px;
+  border-radius: 15px;
 }
 .contact-container {
   padding: 0 10px;
@@ -278,4 +289,92 @@ body {
   .form-area { 
     padding: 25px 40px; 
     }
+}
+
+
+
+.profileBox {
+  background: #f4f4f4; 
+  width: 500px;
+  padding: 20px;
+  text-align: left; 
+  border-radius: 15px;
+  display: table; 
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+.profileBox .title {
+  text-align: center;
+}
+.profilesWrapper {
+  margin-top: 50px;  
+  margin-bottom: 70px;
+}
+
+.song {
+  cursor: pointer;
+}
+.song a {
+  text-decoration: none;
+  color: black;
+}
+.song a:hover {
+  color: black;
+  font-size: 1.2em;
+  transition: all .3s;
+}
+
+.artistsTitle {
+  font-size: 1.2em;
+}
+.myMoviesSection {
+  display: table;
+  margin: 50px auto;
+}
+
+.glyphicon-star-empty {
+  position: absolute;
+  right: 0; 
+  right: 20px;
+  top: 10px;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.glyphicon-star {
+  position: absolute;
+  right: 0; 
+  right: 20px;
+  top: 10px;
+  font-size: 2em;
+  color: #dddd05; 
+  cursor: pointer;
+}
+
+.topMoviesSection {
+  display: flex;
+  margin: 50px auto;
+  max-width: 80%;
+}
+.topMovie {
+  width: 50%;
+}
+
+.topMovie:nth-child(even) {
+  margin-left: 10px;
+}
+.topMovie:nth-child(odd) {
+  margin-right: 10px;
+}
+
+.css-10nd86i {
+  margin-bottom: 15px;
+}
+
+.profileSection {
+  padding: 30px;
+  margin: auto;
+  display: table;
+  margin-top: 100px;
+  font-size: 1.2em;
 }

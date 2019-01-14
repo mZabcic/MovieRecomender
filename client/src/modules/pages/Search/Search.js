@@ -26,12 +26,13 @@ class Search extends PureComponent {
 
   handleSearchMoviesQuery(query) {
     fetch(`${config.apiUrl}/movies/search?term=` + query, requestOptions)
-    .then(handleResponse)
-    .then(movies => {
-      this.setState({
-        movies: movies
-      })
-    });
+      .then(handleResponse)
+      .then(movies => {
+        console.log({ movies });
+        this.setState({
+          movies: movies
+        })
+      });
   }
 
   handleLogoutClick() {
@@ -40,19 +41,28 @@ class Search extends PureComponent {
   }
 
   render() {
-    const { user } = this.props;
-    let movies = this.state.movies;
+    const { movies } = this.state;
+    const { omdb, tmdb } = movies;
     return (
       <Page
-        title={`MovieMonster - ${user.name}`}
+        title={`MovieMonster - Search`}
         onLogoutClick={this.handleLogoutClick}
-        loggedIn
-        user={user}>
-        <div>
-			    {movies.omdb ? (movies.omdb.Search.length > 0 && movies.omdb.Search.map((movieEntry, index) => 
-            <MovieEntry movie={movieEntry} key={"movieEntryOmdb" + index.toString()}/>)) : "NISTA"}
-          {movies.tmdb ? (movies.tmdb.results.length > 0 && movies.tmdb.results.map((movieEntry, index) => 
-            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()}/>)) : "NISTA"}
+        loggedIn>
+        <div className="moviesHomeSection myMoviesSection">
+          <div>
+            <label>The Movie DB search results:</label>
+            {tmdb ? (tmdb.results.length > 0 && tmdb.results.map((movieEntry, index) =>
+              <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : ""}
+            {tmdb ? tmdb.results.length === 0 && <label>No movies found on The Movie DB</label> : ""}
+          </div>
+          <div>
+            <label>OMBD search results:</label>
+            {omdb ? (omdb.Search.length > 0 && omdb.Search.map((movieEntry, index) =>
+              <MovieEntry movie={movieEntry} key={"movieEntryOmdb" + index.toString()}
+                source="OMDB" />)) : ""}
+            {omdb ? omdb.Search.length === 0 && <label>No movies found on OMDB</label> : ""}
+          </div>
+
         </div>
       </Page>
     );
