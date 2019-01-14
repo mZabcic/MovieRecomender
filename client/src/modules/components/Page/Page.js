@@ -31,42 +31,43 @@ export default class Page extends PureComponent {
     const { children, loggedIn, onLogoutClick, user, title } = this.props;
     return (
       <div>
-      <div className="app">
-        <Helmet>
-          <title>{title}</title>
-        </Helmet>
+        <div className="app">
+          <Helmet>
+            <title>{title}</title>
+          </Helmet>
+          {loggedIn &&
+            <header >
+              <div class="navigation holder" >
+                <ul class="text-font">
+                  <li class="middle left"><a href="/"><b>M</b>ovie<b>M</b>onster</a></li>
+                  <li class="half center space-right">
+                    <form onSubmit={this.handleSearchSubmit}>
+                      <input className="form-control" type="text" onChange={this.handleSearchChange} />
+                      <input type="submit" value="Search" className="btn btn-primary" />
+                    </form>
+                  </li>
+                  <li class="quarter right"><a href="/my-movies">My movies</a></li>
+                  <li class="quarter right"><a href="/top-movies">Top movies</a></li>
+                  <li class="quarter right"><a href="/recommended">Recommended</a></li>
+                  <li class="quarter right"><a href="/about">About</a></li>
+                  <li class="quarter right"><a href="/contact">Contact</a></li>
+                  <li class="quarter right"><a href="/profile">Profile</a></li>
+                  <li class="quarter right"><a href="/profile"><button class="btn btn-light" onClick={onLogoutClick}>Log Out</button></a></li>
+                </ul>
+              </div>
+            </header>
+          }
+          {children}
+
+        </div>
         {loggedIn &&
-          <header > 
-          <div class="navigation holder" >
-            <ul class="text-font">
-              <li class="middle left"><a href="/"><b>M</b>ovie<b>M</b>onster</a></li>
-              <li class="half center space-right">
-                <form onSubmit={this.handleSearchSubmit}>
-                <input className="form-control" type="text" onChange={this.handleSearchChange} />
-                <input type="submit" value="Search" className="btn btn-primary" />
-                </form>
-              </li>
-              <li class="quarter right"><a href="/my-movies">My movies</a></li>
-              <li class="quarter right"><a href="/top-movies">Top movies</a></li>            
-              <li class="quarter right"><a href="/about">About</a></li>
-              <li class="quarter right"><a href="/contact">Contact</a></li>
-              <li class="quarter right"><a href="/profile">Profile</a></li>
-              <li class="quarter right"><a href="/profile"><button class="btn btn-light" onClick={onLogoutClick}>Log Out</button></a></li>
-            </ul> 
-          </div>
-          </header>
-        } 
-          {children} 
-        
-      </div>
-      {loggedIn &&
           <footer>
-          <div className="footer holder">
-            <ul className="footer-list">
-              <li className="half3 center">2019&copy; <b>M</b>ovie<b>M</b>onster</li><li class="half3 center"><a href="http://165.227.128.66/api-docs#/">API documentation</a></li>
-              <li class="half3 center"><a href="www.fer.unizg.hr">FER, </a>Unska 3, 10000, Zagreb</li>
-            </ul> 
-          </div> 
+            <div className="footer holder">
+              <ul className="footer-list">
+                <li className="half3 center">2019&copy; <b>M</b>ovie<b>M</b>onster</li><li class="half3 center"><a href="http://165.227.128.66/api-docs#/">API documentation</a></li>
+                <li class="half3 center"><a href="www.fer.unizg.hr">FER, </a>Unska 3, 10000, Zagreb</li>
+              </ul>
+            </div>
           </footer>}
       </div>
     );

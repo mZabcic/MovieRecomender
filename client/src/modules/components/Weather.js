@@ -42,7 +42,7 @@ class Weather extends React.Component {
 	componentDidMount() {
 		this.getWeather();
 	}
-	
+	 	
 	render() { 
 		return (
 			<div className="weatherSection ">
