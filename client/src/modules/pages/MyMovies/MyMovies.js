@@ -46,11 +46,11 @@ class MyMovies extends PureComponent {
   }
 
   requestUserMovies() {
-    fetch(`${config.apiUrl}/movies`, requestOptions)
+    fetch(`${config.apiUrl}/users/me`, requestOptions)
       .then(handleResponse)
-      .then(movies => {
+      .then(user => {
         this.setState({
-          movies: movies
+          movies: user.movies
         })
       });
   }

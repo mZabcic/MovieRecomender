@@ -94,6 +94,7 @@ class MovieEntry extends PureComponent {
 
   render() {
     const { movie, user, index, poster, home, source } = this.props;
+    console.log({movie})
     if (this.props.source == "OMDB") {
       return (
         <div>

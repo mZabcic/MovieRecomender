@@ -26,6 +26,7 @@ class Weather extends React.Component {
 	    const data = await api_call.json(); 
 	   	var h = new Date(data.dt*1000).getHours();
 	   	var m = new Date(data.dt*1000).getMinutes(); 
+	   	if(m == "0") m = "00";
 	   	var rd = h + ":" + m; 
 	    this.setState ( {
 	      temperature : "Temperature " + data.main.temp + " C",
