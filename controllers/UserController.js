@@ -11,7 +11,9 @@ const returnUser = function(req, res) {
     User.findOne({_id: req.params.user_id}).populate(['movies', 'music'])
     .exec(function (err, movie) {
       if (err) return err;
-  
+       movie.movies.forEach((e) => {
+           e.userLiked = 1;
+       })
       return res.json(movie);
   });
 }
