@@ -73,7 +73,7 @@ class MovieEntry extends PureComponent {
       <div>
         <a href={movie.homepage}>
           <div className="movieBox">
-            <p><b>{movie.name}</b></p>
+            <p className="movieTitle"><b>{movie.name}</b></p>
             <hr />
             <div className="movieFlex">
               <div><img src={movie.cover} /></div>
