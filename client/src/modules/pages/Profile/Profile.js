@@ -38,12 +38,17 @@ class Profile extends PureComponent {
 const ProfileCard = ({user}) => {
   console.log({user})
   const render = 
-    <div className="moviesHomeSection">
-      <div>Name: {user.first_name}</div>
-      <div>Surname: {user.last_name}</div>
-      <div>Email: {user.email}</div>
-      <div>No of my movies: {user.movies ? user.movies.length : 0}</div>
-    </div>;
+    <div className="moviesHomeSection profileSection">
+      <div className="movieFlex">
+      <div><img src="img/avatar.png"/></div>
+      <div>
+      <div><b>Name:</b> {user.first_name}</div>
+      <div><b>Surname:</b> {user.last_name}</div>
+      <div><b>Email:</b> {user.email}</div>
+      <div><b>No of my movies:</b> {user.movies ? user.movies.length : 0}</div>
+      </div>
+      </div>      
+    </div>
   return render;
 }
 
