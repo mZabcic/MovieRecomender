@@ -4,10 +4,10 @@ import { withRouter } from "react-router-dom";
 import { Page } from "modules/components";
 import { MovieEntry } from "../MovieEntry";
 import { logoutUser, getUser } from "modules/redux";
-import { handleResponse, requestOptions } from "../../services/networking";
+import { handleResponse, requestOptions } from "modules/services/networking";
 import config from 'config/default.json';
 
-class MyMovies extends PureComponent {
+class Recommended extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -16,15 +16,15 @@ class MyMovies extends PureComponent {
     }
 
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.requestUserMovies = this.requestUserMovies.bind(this);
+    this.requestRecommendedMovies = this.requestRecommendedMovies.bind(this);
   }
 
   componentDidMount() {
-    this.requestUserMovies();
+    this.requestRecommendedMovies();
   }
 
-  requestUserMovies() {
-    fetch(`${config.apiUrl}/movies`, requestOptions)
+  requestRecommendedMovies() {
+    fetch(`${config.apiUrl}/movies/recommend`, requestOptions)
       .then(handleResponse)
       .then(movies => {
         console.log({ movies })
@@ -41,16 +41,17 @@ class MyMovies extends PureComponent {
 
   render() {
     const { user } = this.props;
-    let movies = this.state.movies;
+    const { movies } = this.state;
+    console.log({ movies });
     return (
       <Page
-        title="MovieMonster - My Movies"
+        title="MovieMonster - Recommended"
         onLogoutClick={this.handleLogoutClick}
         loggedIn
         user={user}>
         <div className="moviesHomeSection myMoviesSection">
-          {movies ? (movies.length > 0 && movies.map((movieEntry, index) =>
-            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : "Nema rezultata"}
+          {movies.results ? (movies.results.length > 0 && movies.results.map((movieEntry, index) =>
+            <MovieEntry movie={movieEntry} key={"movieEntryTmdb" + index.toString()} />)) : "No results"}
         </div>
         &nbsp;
       </Page>
@@ -65,4 +66,4 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = { logoutUserAction: logoutUser };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyMovies));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Recommended));

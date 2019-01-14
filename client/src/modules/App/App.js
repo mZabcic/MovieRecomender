@@ -10,6 +10,7 @@ import { Search } from "modules/pages/Search";
 import { PrivateRoute } from "modules/components";
 import { Router, Route, Switch } from "react-router-dom";
 import { history } from "modules/services";
+import { Recommended } from 'modules/pages/Recommended';
 
 export default class App extends PureComponent {
   render() {
@@ -22,6 +23,7 @@ export default class App extends PureComponent {
           <PrivateRoute path="/top-movies" component={TopMovies} />
           <PrivateRoute path="/my-movies" component={MyMovies} />
           <PrivateRoute path="/search" component={Search} />
+          <PrivateRoute path="/recommended" component={Recommended} />
           <Route path="/login" component={Login} />
           <PrivateRoute path="/" component={Home} />
         </Switch>
