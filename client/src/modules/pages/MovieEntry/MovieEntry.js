@@ -62,11 +62,20 @@ class MovieEntry extends PureComponent {
           })
           .then(movie => { });
       }
-      else if ((movie.source ? movie.source : this.props.source) == "OMDB") {
-        console.log("aaaaaaaaaaaaa");
+      else if (movie.id == undefined) {
+        fetch(`${config.apiUrl}/movies/omdb/` + movie.imdbID, requestOptionsPost)
+          .then(handleResponse => {
+            if (handleResponse.ok) {
+              this.setState({
+                favourite: !this.state.favourite
+              })
+            }
+          })
+          .then(movie => { 
+          });
       }
       else{
-        fetch(`${config.apiUrl}/movies/tmdb/` + movie._id, requestOptionsPost)
+        fetch(`${config.apiUrl}/movies/tmdb/` + movie.id, requestOptionsPost)
           .then(handleResponse => {
             if (handleResponse.ok) {
               this.setState({
@@ -99,13 +108,14 @@ class MovieEntry extends PureComponent {
       return (
         <div>
         <div className="movieBox">
-          <p className="movieTitle"><b>{movie.Title}</b></p>
+        {!home &&
+        <span onClick={this.handleFavourite} className={this.state.favourite ? "glyphicon glyphicon-star" : "glyphicon glyphicon-star-empty"}></span>
+          }<p className="movieTitle"><b>{movie.Title ? movie.Title : movie.Title}</b></p>
           <hr />
           <div className="movieFlex">
             <div><img src={movie.Poster} /></div>
             <div>
               <p><b>Released:</b> {movie.Year}</p>
-              <p><b>Rating:</b> "unknown"</p>
             </div>
           </div>
         </div>
