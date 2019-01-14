@@ -274,6 +274,7 @@ body {
   padding: 25px 20px;
   margin: 0 auto;
   max-width: 500px;
+  border-radius: 15px;
 }
 .contact-container {
   padding: 0 10px;
