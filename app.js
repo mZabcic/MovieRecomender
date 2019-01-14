@@ -216,7 +216,7 @@ const updateGenres = () => {
         allGenres.push(g);
       })
       Genre.collection.insert(allGenres, function (err, docs) {
-        res.json(docs);
+        console.log(docs)
       });
     });
 }
