@@ -115,7 +115,10 @@ class MovieEntry extends PureComponent {
           <div className="movieFlex">
             <div><img src={movie.Poster} /></div>
             <div>
+              
               <p><b>Released:</b> {movie.Year}</p>
+            
+              
             </div>
           </div>
         </div>
@@ -133,9 +136,32 @@ class MovieEntry extends PureComponent {
             <div><img src={poster ? poster : (movie.cover ? movie.cover : movie.poster_path)} /></div>
             <div>
               <p>{movie.description ? movie.description : movie.overview}</p>
+              
               <p><b>Released:</b> {home ? movie.released : movie.release_date}</p>
+              {movie.social_data == undefined &&
               <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
                 movie.social_data.tmdb_vote_average : "unknown")))}</p> 
+              }
+                {movie.social_data &&
+            <div>
+              {movie.social_data.tmdb_vote_average &&
+              <p><b>Rating:</b> {home ? movie.rating : (movie.vote_average ? movie.vote_average : (movie.fan_count ? movie.fan_count + " (fan count)" : (movie.social_data ?
+                movie.social_data.tmdb_vote_average : "unknown")))}</p> 
+              }
+              {movie.social_data.tmdb_vote_count &&
+              <p><b>Voters:</b> {movie.social_data.tmdb_vote_count}</p> 
+              }
+              {movie.social_data.fb_fan_count &&
+              <p><b>Number of likes:</b> {movie.social_data.fb_fan_count}</p> 
+              }
+                {movie.social_data.omdb_rating &&
+              <p><b>IMDB Rating:</b> {movie.social_data.omdb_rating}</p> 
+                }
+                {movie.social_data.omdb_rating &&
+              <p><b>Voters:</b> {movie.social_data.omdb_vote_count}</p> 
+            }
+            </div>
+                }
             </div>
           </div>
         </div>
