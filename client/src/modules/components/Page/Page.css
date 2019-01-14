@@ -370,3 +370,11 @@ body {
 .css-10nd86i {
   margin-bottom: 15px;
 }
+
+.profileSection {
+  padding: 30px;
+  margin: auto;
+  display: table;
+  margin-top: 100px;
+  font-size: 1.2em;
+}
