@@ -55,6 +55,7 @@ class About extends PureComponent {
             <p>From The Internet Movie Database: <strong>{data.tmdb}</strong></p>
             <p>From The Open Movie Database: <strong>{data.omdb}</strong></p>
             <p>From Facebook: <strong>{data.fb}</strong></p>
+            <p>From Trakt.tv: <strong>{data.custom}</strong></p>
           </div>
           <div className="profileBox">
             <p className="title">Ivan Ivkošić</p>
