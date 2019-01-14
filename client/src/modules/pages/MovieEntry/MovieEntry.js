@@ -86,10 +86,7 @@ class MovieEntry extends PureComponent {
     return (
       <div>
         <div className="movieBox">
-<<<<<<< HEAD
         <span className="glyphicon glyphicon-star-empty"></span>
-=======
->>>>>>> master
           <p className="movieTitle"><b>{movie.name ? movie.name : movie.title}</b></p>
           <hr />
           <div className="movieFlex">
