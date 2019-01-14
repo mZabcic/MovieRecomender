@@ -321,7 +321,7 @@ exports.addTMDBMovie = (req, res) => {
         method: 'GET',
         json: true
     }, function (err, response, data) {
-      if (data.id == "tmdb-undefined") {
+      if (data.id == undefined) {
         return res.status(400).json({error : "Movie doesnt exist"});
       }
      
@@ -393,6 +393,9 @@ exports.addOMDBMovie = (req, res) => {
         method: 'GET',
         json: true
     }, function (err, response, data) {
+      if (data.imdbID == undefined) {
+        return res.status(400).json({error : "Movie doesnt exist"});
+      }
       var g = [];
       g = data.Genre.split(',');
       for (var i = 0; i < g.length; i++) {

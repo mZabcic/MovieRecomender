@@ -282,7 +282,7 @@ router.route('/')
 
 /**
  * This route will return movie by id
- * @route GET /movie/{movie_id}
+ * @route GET /movies/{movie_id}
  * @param {string} movie_id.param.required - Movie id
  * @group Movies
  * @returns {Movie.model} 200 - Movie object
@@ -334,7 +334,7 @@ router.route('/:movie_id')
 
 /**
  * This route will return users by movie id
- * @route GET /movie/{movie_id}/users
+ * @route GET /movies/{movie_id}/users
  * @param {string} movie_id.param.required - Movie id
  * @group Movies
  * @returns {Array.<User>} 200 - Array of users that like this movie
@@ -352,7 +352,7 @@ router.route('/:movie_id/users')
 
 /**
  * This route will add movie from db to user movies list
- * @route POST /movie/{movie_id}/users/{user_id}
+ * @route POST /movies/{movie_id}/users/{user_id}
  * @param {string} movie_id.param.required - Movie id
  * @param {string} movie_id.param.required - User id
  * @group Movies
@@ -366,7 +366,7 @@ router.route('/:movie_id/users')
  */
 /**
  * This route will remove movie to user movies list
- * @route DELETE /movie/{movie_id}/users/{user_id}
+ * @route DELETE /movies/{movie_id}/users/{user_id}
  * @param {string} movie_id.param.required - Movie id
  * @param {string} movie_id.param.required - User id
  * @group Movies
