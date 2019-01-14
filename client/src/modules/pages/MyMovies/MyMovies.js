@@ -56,9 +56,10 @@ class MyMovies extends PureComponent {
   }
 
   handleGenreChange(event) {
-    fetch(`${config.apiUrl}/movies/genre/` + event.value.toString(), requestOptions)
+    fetch(`${config.apiUrl}/movies/genres/` + event.value.toString(), requestOptions)
       .then(handleResponse)
       .then(movies => {
+        console.log({movies})
         this.setState({
           movies: movies
         })
